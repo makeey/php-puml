@@ -1,0 +1,21 @@
+{
+    "name": "makeey/php-puml",
+    "autoload": {
+        "psr-4": {
+            "PhpUML\\" : "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Anton Makieiev",
+            "email": "makeey97@gmail.com"
+        }
+    ],
+    "require": {
+        "php-di/php-di": "^6.0",
+        "phpunit/php-token-stream": "^3.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    }
+}
