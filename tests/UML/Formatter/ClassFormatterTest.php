@@ -27,7 +27,7 @@ class {$class->className()}
 {
     - bar: float
     --
-    baz()
+    + baz()
 }
 EOT;
         $this->assertEquals($expectedString, ClassFormatter::format($class));
@@ -49,8 +49,8 @@ class {$class->className()}
     - bar: float
     + baq: float
     --
-    baz()
-    oof()
+    + baz()
+    + oof()
 }
 EOT;
         $this->assertEquals($expectedString, ClassFormatter::format($class));

@@ -1,3 +1,5 @@
 .vs/
 .idea/
 vendor/
+.phpunit.result.cache
+composer.lock
