@@ -1,7 +1,11 @@
 <?php
 
+namespace PhpUML\Tests\Parser\Tokens;
 
-class VariableTokenTest extends \PHPUnit\Framework\TestCase
+use PhpUML\Parser\Tokens\VariableToken;
+use PHPUnit\Framework\TestCase;
+
+class VariableTokenTest extends TestCase
 {
 
     public function testCanPaseOneVariable()
@@ -13,12 +17,11 @@ class Tes{
     private \$test;
 }
 EOT
-);
+        );
         $variables = [];
-        foreach ($tokens as $id => $token)
-        {
-            if($token[0] === T_VARIABLE){
-                $variables[] = new \PhpUML\Parser\VariableToken($id, $tokens);
+        foreach ($tokens as $id => $token) {
+            if ($token[0] === T_VARIABLE) {
+                $variables[] = new VariableToken($id, $tokens);
             }
         }
         $this->assertCount(1, $variables);

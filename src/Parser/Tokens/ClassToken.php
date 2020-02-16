@@ -26,8 +26,6 @@ class ClassToken extends AbstractToken
         if ($next[0] === T_STRING) {
             return $next[1];
         }
-        // todo implement anon classes
-
     }
 
     public function parent(): ?string

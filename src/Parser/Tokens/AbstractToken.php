@@ -1,8 +1,6 @@
 <?php
 
-
 namespace PhpUML\Parser\Tokens;
-
 
 class AbstractToken
 {

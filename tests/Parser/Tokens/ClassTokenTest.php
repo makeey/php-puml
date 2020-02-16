@@ -1,5 +1,7 @@
 <?php
 
+namespace PhpUML\Tests\Parser\Tokens;
+
 use PhpUML\Parser\Tokens\ClassToken;
 use PHPUnit\Framework\TestCase;
 

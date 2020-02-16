@@ -1,6 +1,8 @@
 <?php
 
-use PhpUML\Parser\FunctionToken;
+namespace PhpUML\Tests\Parser\Tokens;
+
+use PhpUML\Parser\Tokens\FunctionToken;
 use PHPUnit\Framework\TestCase;
 
 class FunctionTokenTest extends TestCase
@@ -16,9 +18,8 @@ class Foo
     }
 }
 EOT
-);
-        foreach ($tokens as $id => $value)
-        {
+        );
+        foreach ($tokens as $id => $value) {
             if ($value[0] === T_FUNCTION) {
                 $functionToken = new FunctionToken($id, $tokens);
             }
@@ -38,8 +39,7 @@ class Foo
 }
 EOT
         );
-        foreach ($tokens as $id => $value)
-        {
+        foreach ($tokens as $id => $value) {
             if ($value[0] === T_FUNCTION) {
                 $functionToken = new FunctionToken($id, $tokens);
                 $this->assertCount(1, $params = $functionToken->params());
@@ -59,8 +59,7 @@ class Foo
 }
 EOT
         );
-        foreach ($tokens as $id => $value)
-        {
+        foreach ($tokens as $id => $value) {
             if ($value[0] === T_FUNCTION) {
                 $functionToken = new FunctionToken($id, $tokens);
                 $this->assertCount(3, $params = $functionToken->params());
@@ -70,6 +69,47 @@ EOT
                 $this->assertEquals("\$baz", $params[1]['variable']);
                 $this->assertEquals("Name", $params[2]['type']);
                 $this->assertEquals("\$class", $params[2]['variable']);
+            }
+        }
+
+        $tokens = token_get_all(<<<EOT
+<?php
+class Foo
+{
+    public function test(\$foo)
+    {
+    }
+}
+EOT
+        );
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+                $this->assertCount(1, $params = $functionToken->params());
+                $this->assertEquals("mixed", $params[0]['type']);
+                $this->assertEquals("\$foo", $params[0]['variable']);
+            }
+        }
+
+
+        $tokens = token_get_all(<<<EOT
+<?php
+class Foo
+{
+    public function test(\$foo, int \$baz)
+    {
+    }
+}
+EOT
+        );
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+                $this->assertCount(2, $params = $functionToken->params());
+                $this->assertEquals("mixed", $params[0]['type']);
+                $this->assertEquals("\$foo", $params[0]['variable']);
+                $this->assertEquals("int", $params[1]['type']);
+                $this->assertEquals("\$baz", $params[1]['variable']);
             }
         }
 

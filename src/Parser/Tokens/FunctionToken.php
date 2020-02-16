@@ -51,8 +51,18 @@ class FunctionToken
                     ];
                     $i +=2;
                 }
+                if ($next[0] === T_VARIABLE)  {
+                    $this->params[] = [
+                        'type' => 'mixed',
+                        'variable' => $next[1]
+                    ];
+                }
                 $i++;
             }while($next != ")");
+            if($this->params === null)
+            {
+                $this->params = [];
+            }
         }
         return $this->params;
     }
