@@ -117,51 +117,6 @@ EOT
 
     }
 
-    public function test(): void
-    {
-        $tokens = token_get_all(<<<EOT
-<?php
-
-class Test1
-{
-    /** @var string */
-    public \$parameters;
-
-    public function test(){
-        \$anather = "test";
-    }
-}
-EOT
-        );
-
-        $members = [];
-        foreach ($tokens as $id => $token) {
-            if ($token[0] === T_VARIABLE) {
-                $members[] = new MemberToken($id, $tokens);
-            }
-        }
-
-        $this->assertCount(2, $members);
-        $expectedData =
-            [
-                [
-                    'accessModifier' => 'public',
-                    'name' => '$parameters',
-                    'type' => 'string'
-                ],
-
-            ];
-
-        $this->assertEquals($expectedData,
-            array_map(static function (MemberToken $memberToken): array {
-                return [
-                    'accessModifier' => $memberToken->accessModifier(),
-                    'name' => $memberToken->name(),
-                    'type' => $memberToken->type()
-                ];
-            }, $members));
-
-    }
 }
 
 

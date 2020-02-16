@@ -38,6 +38,7 @@ class Fee
     
 }
 }
+
 }
 EOT;
         $this->assertEquals($expecterString, PackageFormatter::format($package));
