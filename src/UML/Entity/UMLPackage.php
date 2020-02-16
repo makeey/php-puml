@@ -36,4 +36,24 @@ class UMLPackage
     {
         return $this->classes;
     }
+
+    public function merchePackange(UMLPackage $package)
+    {
+        if($package->name() === $this->name) {
+            $this->classes = array_merge($this->classes, $package->classes());
+
+            foreach ($package->packages() as $newPackages){
+                $found = false;
+                foreach ($this->packages as $package) {
+                    if($package->name() === $newPackages->name()) {
+                        $found = true;
+                        $package->merchePackange($newPackages);
+                    }
+                }
+                if($found === false){
+                    $this->packages[] = $newPackages;
+                }
+            }
+        }
+    }
 }
