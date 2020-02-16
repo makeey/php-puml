@@ -3,13 +3,13 @@
 namespace PhpUML\Parser;
 
 use Ds\Stack;
-use PhpUML\Parser\Entity\PhpFile;
 use PhpUML\Parser\Entity\PhpClass;
 use PhpUML\Parser\Entity\PhpClassMember;
+use PhpUML\Parser\Entity\PhpFile;
 use PhpUML\Parser\Entity\PhpMethod;
 use PhpUML\Parser\Entity\PhpMethodParameter;
+use PhpUML\Parser\Tokens\ClassMethod;
 use PhpUML\Parser\Tokens\ClassToken;
-use PhpUML\Parser\Tokens\FunctionToken;
 use PhpUML\Parser\Tokens\MemberToken;
 use PhpUML\Parser\Tokens\NameSpaceToken;
 
@@ -61,6 +61,12 @@ class SourceParser
         return $this->file;
     }
 
+    private function processNameSpace(int $id, array $tokens): void
+    {
+        $namespaceToken = new NameSpaceToken($id, $tokens);
+        $this->file->setNameSpace($namespaceToken->name());
+    }
+
     private function processClassToken(int $id, array $tokens): void
     {
         $phpClassToken = new ClassToken($id, $tokens);
@@ -84,7 +90,7 @@ class SourceParser
     private function processFunctionToken(int $id, array $tokens): void
     {
         if ($this->classes->isEmpty() === false) {
-            $methodToken = new FunctionToken($id, $tokens);
+            $methodToken = new ClassMethod($id, $tokens);
             $this->methods->push(new PhpMethod($methodToken->functionName(),
                 array_map(
                     static function (array $parameter): PhpMethodParameter {
@@ -94,7 +100,9 @@ class SourceParser
                         );
                     },
                     $methodToken->params()
-                )));
+                ),
+                $methodToken->accessModifier()
+            ));
         } else {
             $this->functions->push("function not implemented");
         }
@@ -110,11 +118,5 @@ class SourceParser
         if ($this->classes->isEmpty() === false && $this->methods->isEmpty()) {
             $this->file->appendClass($this->classes->pop());
         }
-    }
-
-    private function processNameSpace(int $id, array $tokens): void
-    {
-        $namespaceToken = new NameSpaceToken($id, $tokens);
-        $this->file->setNameSpace($namespaceToken->name());
     }
 }

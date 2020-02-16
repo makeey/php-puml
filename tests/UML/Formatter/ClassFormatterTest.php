@@ -17,7 +17,7 @@ class ClassFormatterTest extends TestCase
             new UMLProperty("bar", "private", "float")
         ];
         $methods = [
-            new UMLMethod("baz")
+            new UMLMethod("baz", "public")
         ];
 
         $class = new UMLClass("Foo", $methods, $properties);
@@ -37,8 +37,8 @@ EOT;
               new UMLProperty("baq", "public", "float")
         ];
         $methods = [
-            new UMLMethod("baz"),
-            new UMLMethod("oof")
+            new UMLMethod("baz", "public"),
+            new UMLMethod("oof", "public")
         ];
 
         $class = new UMLClass("Foo", $methods, $properties);

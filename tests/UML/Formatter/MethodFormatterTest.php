@@ -14,6 +14,7 @@ class MethodFormatterTest extends TestCase
     {
         $method = new UMLMethod(
             "foo",
+            "public",
             new UMLMethodParameter(
                 "bar",
                 "string"
@@ -23,6 +24,7 @@ class MethodFormatterTest extends TestCase
 
         $method = new UMLMethod(
             "foo",
+            "public",
             new UMLMethodParameter(
                 "bar",
                 "string"

@@ -2,50 +2,43 @@
 
 namespace PhpUML\Parser\Tokens;
 
-class FunctionToken
+class FunctionToken extends AbstractToken
 {
-    private $id;
-    private $params;
-    private $functionName;
-    private $tokens;
-
-    public function __construct(int $id, array $tokens)
-    {
-        $this->id = $id;
-        $this->tokens = $tokens;
-    }
+    /** @var array */
+    protected $params;
+    /** @var string */
+    protected $functionName;
 
     public function functionName(): string
     {
-        if($this->functionName === null) {
+        if ($this->functionName === null) {
             $this->functionName = $this->parseName();
         }
         return $this->functionName;
     }
 
-    private function parseName(): string
+    protected function parseName(): string
     {
-        $next = $this->tokens[$this->id +1];
+        $next = $this->tokens[$this->id + 1];
 
-        if($next[0] === T_WHITESPACE) {
-            $next = $this->tokens[$this->id +2];
+        if ($next[0] === T_WHITESPACE) {
+            $next = $this->tokens[$this->id + 2];
         }
 
-        if($next[0] === T_STRING) {
-           return $next[1];
+        if ($next[0] === T_STRING) {
+            return $next[1];
         }
         return "";
     }
 
     public function params(): array
     {
-        if($this->params === null)
-        {
+        if ($this->params === null) {
             $i = 4;
-            do{
+            do {
                 $next = $this->tokens[$this->id + $i];
-                if($next[0] === T_STRING) {
-                    if($next[1] !== "null") {
+                if ($next[0] === T_STRING) {
+                    if ($next[1] !== "null") {
                         $this->params[] = [
                             'type' => $next[1],
                             'variable' => $this->tokens[$this->id + $i + 2][1] ?? "bugs"
@@ -53,16 +46,15 @@ class FunctionToken
                         $i += 2;
                     }
                 }
-                if ($next[0] === T_VARIABLE)  {
+                if ($next[0] === T_VARIABLE) {
                     $this->params[] = [
                         'type' => 'mixed',
                         'variable' => $next[1]
                     ];
                 }
                 $i++;
-            }while($next != ")");
-            if($this->params === null)
-            {
+            } while ($next != ")");
+            if ($this->params === null) {
                 $this->params = [];
             }
         }

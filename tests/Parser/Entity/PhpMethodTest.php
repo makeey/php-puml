@@ -12,8 +12,9 @@ class PhpMethodTest extends TestCase
     {
         $methodName = 'methodName';
         $params = [];
-        $method = new PhpMethod($methodName, $params);
+        $method = new PhpMethod($methodName, $params, "public");
         $this->assertEquals($methodName, $method->name());
         $this->assertEmpty($method->parameters());
+        $this->assertEquals("public", $method->accessModifier());
     }
 }

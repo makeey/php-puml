@@ -44,7 +44,7 @@ class UmlDiagramFactory implements IUMLDiagramFactory
         return new UMLClass(
             $class->name(),
             array_map(static function (PhpMethod $method): UMLMethod {
-                return new UMLMethod($method->name(), ...array_map(
+                return new UMLMethod($method->name(), $method->accessModifier(), ...array_map(
                     static function (PhpMethodParameter $parameter): UMLMethodParameter {
                         return new UMLMethodParameter($parameter->name(), $parameter->type());
                     }, $method->parameters()));
