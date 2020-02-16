@@ -7,7 +7,7 @@ namespace PhpUML\UML\Formatter;
 use PhpUML\UML\Entity\UMLDiagram;
 use PhpUML\UML\Entity\UMLPackage;
 
-class Formatter
+class Formatter implements IFormatter
 {
     private $output = "";
 

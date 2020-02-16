@@ -14,7 +14,7 @@ use PhpUML\UML\Entity\UMLMethodParameter;
 use PhpUML\UML\Entity\UMLPackage;
 use PhpUML\UML\Entity\UMLProperty;
 
-class UmlDiagramFactory
+class UmlDiagramFactory implements IUMLDiagramFactory
 {
     public function buildDiagram(PhpFile $file): UMLDiagram
     {
@@ -53,7 +53,7 @@ class UmlDiagramFactory
             array_map(static function (PhpClassMember $method): UMLProperty {
                 return new UMLProperty($method->name(), $method->accessModifier(), $method->type());
             },
-                $class->properties()),
-            );
+                $class->properties()
+            ));
     }
 }

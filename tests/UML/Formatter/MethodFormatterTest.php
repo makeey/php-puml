@@ -19,7 +19,7 @@ class MethodFormatterTest extends TestCase
                 "string"
             )
         );
-        $this->assertEquals("foo(bar: string)\n", MethodFormatter::format($method));
+        $this->assertEquals("foo(bar: string)", MethodFormatter::format($method));
 
         $method = new UMLMethod(
             "foo",
@@ -32,6 +32,6 @@ class MethodFormatterTest extends TestCase
                 "int"
             )
         );
-        $this->assertEquals("foo(bar: string, baz: int)\n", MethodFormatter::format($method));
+        $this->assertEquals("foo(bar: string, baz: int)", MethodFormatter::format($method));
     }
 }
