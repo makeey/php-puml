@@ -27,6 +27,45 @@ EOT
         $this->assertEquals("test", $functionToken->functionName());
     }
 
+    public function testCanParseMethodWithOptionalParams(): void
+    {
+        $tokens = token_get_all(<<<EOT
+<?php
+class Foo
+{
+    public function test(string \$name = null)
+    {
+    }
+}
+EOT
+        );
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+            }
+        }
+        $this->assertEquals("test", $functionToken->functionName());
+        $this->assertCount(1, $functionToken->params());
+
+        $tokens = token_get_all(<<<EOT
+<?php
+class Foo
+{
+    public function test(?string \$name)
+    {
+    }
+}
+EOT
+        );
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+            }
+        }
+        $this->assertEquals("test", $functionToken->functionName());
+        $this->assertCount(1, $functionToken->params());
+    }
+
     public function testCanParseMethodWithParams(): void
     {
         $tokens = token_get_all(<<<EOT

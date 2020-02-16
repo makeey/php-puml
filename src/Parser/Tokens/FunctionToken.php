@@ -45,11 +45,13 @@ class FunctionToken
             do{
                 $next = $this->tokens[$this->id + $i];
                 if($next[0] === T_STRING) {
-                    $this->params[] = [
-                        'type' => $next[1],
-                        'variable' => $this->tokens[$this->id + $i + 2][1] ?? "bugs"
-                    ];
-                    $i +=2;
+                    if($next[1] !== "null") {
+                        $this->params[] = [
+                            'type' => $next[1],
+                            'variable' => $this->tokens[$this->id + $i + 2][1] ?? "bugs"
+                        ];
+                        $i += 2;
+                    }
                 }
                 if ($next[0] === T_VARIABLE)  {
                     $this->params[] = [
