@@ -1,13 +1,11 @@
 <?php
 
-
-namespace PhpUML\Entity;
-
+namespace PhpUML\UML\Entity;
 
 class UMLClass
 {
+    /** @var string  */
     private $className;
-
     /** @var UMLMethod[] */
     private $methods;
     /** @var UMLProperty[] */
