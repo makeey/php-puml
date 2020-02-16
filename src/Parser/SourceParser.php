@@ -34,6 +34,10 @@ class SourceParser
 
     public function __invoke(string $phpSourceCode): PhpFile
     {
+        $this->classes = new Stack();
+        $this->methods = new Stack();
+        $this->functions = new Stack();
+        $this->file = new PhpFile();
         $tokens = token_get_all($phpSourceCode);
         foreach ($tokens as $id => $token) {
             switch ($token[0]) {

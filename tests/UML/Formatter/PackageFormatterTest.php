@@ -29,7 +29,7 @@ class PackageFormatterTest extends TestCase
         $expecterString = <<<EOT
 package Foo
 {
-package Bar
+package Foo.Bar
 {
 class Fee
 {
@@ -38,6 +38,7 @@ class Fee
     
 }
 }
+
 
 }
 EOT;
@@ -71,7 +72,7 @@ EOT;
         $expectedString = <<<EOT
 package Foo
 {
-package Bar
+package Foo.Bar
 {
 class Fee
 {
@@ -80,9 +81,64 @@ class Fee
     
 }
 }
-package Ret
+package Foo.Ret
 {
 class Too
+{
+    
+    --
+    
+}
+}
+
+
+}
+EOT;
+        $this->assertEquals($expectedString, PackageFormatter::format($package));
+
+    }
+
+    public function testFormatNested3Packages(): void
+    {
+        $package = new UMLPackage(
+            "Foo",
+            [
+                new UMLPackage(
+                    "Bar",
+                    [
+                        new UMLPackage(
+                            "Ret",
+                            [],
+                            [
+                                new UMLClass("Too", [], [])
+                            ]
+                        )
+                    ],
+                    [
+                        new UMLClass("Fee", [], [])
+                    ]
+                ),
+
+            ],
+            []
+        );
+
+        $expectedString = <<<EOT
+package Foo
+{
+package Foo.Bar
+{
+package Foo.Bar.Ret
+{
+class Too
+{
+    
+    --
+    
+}
+}
+
+class Fee
 {
     
     --
