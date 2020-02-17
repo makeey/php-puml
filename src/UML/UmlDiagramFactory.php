@@ -54,6 +54,8 @@ class UmlDiagramFactory implements IUMLDiagramFactory
                 return new UMLProperty($method->name(), $method->accessModifier(), $method->type());
             },
                 $class->properties()
-            ));
+            ),
+            $class->parent()
+        );
     }
 }

@@ -10,12 +10,15 @@ class PhpClass
     private $properties;
     /** @var PhpMethod[] */
     private $methods;
+    /** @var string|null */
+    private $parent;
 
-    public function __construct(string $name, array $properties, array $methods)
+    public function __construct(string $name, array $properties, array $methods, ?string $parant = null)
     {
         $this->name = $name;
         $this->properties = $properties;
         $this->methods = $methods;
+        $this->parent = $parant;
     }
 
     public function name(): string
@@ -31,6 +34,11 @@ class PhpClass
     public function methods(): array
     {
         return $this->methods;
+    }
+
+    public function parent(): ?string
+    {
+        return $this->parent;
     }
 
     public function appendProperties(PhpClassMember $properties): self
