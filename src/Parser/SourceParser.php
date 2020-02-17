@@ -94,7 +94,7 @@ class SourceParser
             ($this->classes->peek())->appendProperties(
                 new PhpClassMember(
                     $memberToken->name(),
-                    $memberToken->accessModifier(),
+                    $memberToken->accessModifier() ?? "var",
                     $memberToken->type()
                 )
             );
@@ -128,7 +128,7 @@ class SourceParser
 
     private function processControlStructure(int $id, array $tokens): void
     {
-        if ($tokens[$id][0] === T_WHILE && $this->controlStructure->peek() === T_DO) {
+        if ($tokens[$id][0] === T_WHILE && $this->controlStructure->isEmpty() === false && $this->controlStructure->peek() === T_DO) {
             $this->controlStructure->pop();
             return;
         }

@@ -16,11 +16,11 @@ class PackageFormatter
             return "package {$prefix}{$package->name()}\n{\n" . $classes . "\n}\n";
         }
 
-        $fullPrefix = $prefix === "" ? $package->name() . "." : $prefix . $package->name(). ".";
+        $fullPrefix = $prefix === "" ? $package->name() . "." : $prefix . $package->name() . ".";
 
         $packages = implode(array_map(function (UMLPackage $package) use ($fullPrefix): string {
-            $test = self::format($package, $fullPrefix);
-            return $test;
+            $formattedPackage = self::format($package, $fullPrefix);
+            return $formattedPackage;
         }, $package->packages()));
 
         $classes = implode(PHP_EOL, array_map(static function (UMLClass $class): string {
