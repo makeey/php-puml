@@ -33,7 +33,7 @@ class ClassToken extends AbstractToken
 
     public function parent(): ?string
     {
-        if($this->parent === null) {
+        if ($this->parent === null) {
             $this->parent = $this->parseParent();
         }
         return $this->parent;
@@ -43,21 +43,32 @@ class ClassToken extends AbstractToken
     {
         $i = $this->id + 1;
         $next = $this->tokens[$i];
-        while ($next != "{")
-        {
-            if($next[0] === T_EXTENDS) {
-                return $this->tokens[$i+2][1];
+        $className = null;
+        $isExtending = false;
+        while ($next != "{") {
+            if ($next[0] === T_IMPLEMENTS) {
+                break;
+            }
+            if ($next[0] === T_EXTENDS) {
+                $className = $this->tokens[$i + 2][1];
+                $isExtending = true;
+                $i += 2;
+            }
+            if ($next[0] === T_NS_SEPARATOR && $isExtending) {
+                $className .= "\\\\";
+            }
+            if ($next[0] === T_STRING && $isExtending) {
+                $className .= $next[1];
             }
             $i++;
             $next = $this->tokens[$i];
         }
-        return null;
+        return $className;
     }
 
     public function interfaces(): array
     {
-        if($this->interfaces === null)
-        {
+        if ($this->interfaces === null) {
             $this->interfaces = $this->parseInterfaces();
         }
         return $this->interfaces;
@@ -69,12 +80,11 @@ class ClassToken extends AbstractToken
         $next = $this->tokens[$i];
         $interfaces = [];
         $isImplementing = false;
-        while ($next != "{")
-        {
-            if($next[0] === T_IMPLEMENTS) {
+        while ($next != "{") {
+            if ($next[0] === T_IMPLEMENTS) {
                 $isImplementing = true;
             }
-            if($isImplementing && $next[0] === T_STRING) {
+            if ($isImplementing && $next[0] === T_STRING) {
                 $interfaces[] = $this->tokens[$i][1];
             }
             $i++;

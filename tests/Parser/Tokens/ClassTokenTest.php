@@ -16,7 +16,7 @@ class ClassTokenTest extends TestCase
             }
         }
         $this->assertEquals("OneClass", $class->className());
-        $this->assertNull($class->parent());
+        $this->assertEquals(null, $class->parent());
     }
 
     public function testCanParseClassWithParentClass(): void
@@ -36,6 +36,25 @@ EOT
         }
         $this->assertEquals("Foo", $class->className());
         $this->assertEquals("Bar", $class->parent());
+    }
+
+    public function testCanParseClassWithParentClassWithNameSpace(): void
+    {
+        $tokens = token_get_all(<<<EOT
+<?php
+class Foo extends Bar\Baz
+{
+
+}
+EOT
+        );
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_CLASS) {
+                $class = new ClassToken($id, $tokens);
+            }
+        }
+        $this->assertEquals("Foo", $class->className());
+        $this->assertEquals("Bar\\\\Baz", $class->parent());
     }
 
     public function testCanParseClassWithParentClassAndOneInterface(): void
@@ -58,7 +77,7 @@ EOT
         $this->assertCount(1, $class->interfaces());
         $this->assertEquals("Baz", $class->interfaces()[0]);
     }
-
+    
     public function testCanParseClassWithParentClassAndTwoInterface(): void
     {
         $tokens = token_get_all(<<<EOT

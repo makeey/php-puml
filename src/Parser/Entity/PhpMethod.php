@@ -9,18 +9,18 @@ class PhpMethod
     /** @var PhpMethodParameter[] */
     private $parameters;
     /** @var string */
-    private $acessModifier;
+    private $accessModifier;
 
     public function __construct(string $name, array $parameters, string $accessModifier)
     {
         $this->name = $name;
         $this->parameters = $parameters;
-        $this->acessModifier = $accessModifier;
+        $this->accessModifier = $accessModifier;
     }
 
     public function accessModifier(): string
     {
-        return $this->acessModifier;
+        return $this->accessModifier;
     }
     public function name(): string
     {
