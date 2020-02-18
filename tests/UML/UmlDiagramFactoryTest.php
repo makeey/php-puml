@@ -18,7 +18,7 @@ class UmlDiagramFactoryTest extends TestCase
     {
         $phpFile = new PhpFile();
         $phpFile->setNameSpace("Foo\\\\Bar\\\\Baz");
-        $class = new PhpClass("Foo", [], []);
+        $class = new PhpClass("Foo", [], [], $phpFile->namespace());
         $phpFile->appendClass($class);
 
         $expectedUmlDiagram = new UMLDiagram(

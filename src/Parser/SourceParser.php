@@ -93,7 +93,15 @@ class SourceParser
     {
         if ($this->classes->isEmpty() === true) {
             $phpClassToken = new ClassToken($id, $tokens);
-            $this->classes->push(new PhpClass($phpClassToken->className(), [], [], $phpClassToken->parent()));
+            $this->classes->push(
+                new PhpClass(
+                    $phpClassToken->className(),
+                    [],
+                    [],
+                    $this->file->namespace() ?? "",
+                    $phpClassToken->parent()
+                )
+            );
         }
     }
 

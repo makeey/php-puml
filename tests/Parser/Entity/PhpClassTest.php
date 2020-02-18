@@ -14,7 +14,7 @@ class PhpClassTest extends TestCase
         $name = "Foo";
         $methods = [];
         $properties = [];
-        $class = new PhpClass($name, $properties, $methods);
+        $class = new PhpClass($name, $properties, $methods, "");
         $this->assertEquals($name, $class->name());
         $this->assertEquals($properties, $class->properties());
         $this->assertEquals($methods, $class->methods());
@@ -24,7 +24,7 @@ class PhpClassTest extends TestCase
         $name = "Foo";
         $methods = [];
         $properties = [];
-        $class = new PhpClass($name, $properties, $methods);
+        $class = new PhpClass($name, $properties, $methods, "");
         $member = new PhpClassMember("bar", "public",'string');
         $class->appendProperties($member);
         $this->assertEquals($name, $class->name());
@@ -36,7 +36,7 @@ class PhpClassTest extends TestCase
         $name = "Foo";
         $methods = [];
         $properties = [];
-        $class = new PhpClass($name, $properties, $methods);
+        $class = new PhpClass($name, $properties, $methods, "");
         $method = new PhpMethod("bar", [], "public");
         $class->appendMethods($method);
         $this->assertEquals($name, $class->name());

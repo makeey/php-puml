@@ -5,6 +5,8 @@ namespace PhpUML\Parser\Entity;
 class PhpClass
 {
     /** @var string */
+    private $namespace;
+    /** @var string */
     private $name;
     /** @var PhpClassMember[] */
     private $properties;
@@ -13,11 +15,12 @@ class PhpClass
     /** @var string|null */
     private $parent;
 
-    public function __construct(string $name, array $properties, array $methods, ?string $parent = null)
+    public function __construct(string $name, array $properties, array $methods, string $namespace, ?string $parent = null)
     {
         $this->name = $name;
         $this->properties = $properties;
         $this->methods = $methods;
+        $this->namespace = $namespace;
         $this->parent = $parent;
     }
 
@@ -51,5 +54,10 @@ class PhpClass
     {
         $this->methods[] = $method;
         return $this;
+    }
+
+    public function namespace(): string
+    {
+        return $this->namespace;
     }
 }

@@ -14,7 +14,7 @@ class PhpFileTest extends TestCase
         $file = new PhpFile();
         $this->assertEquals(null, $file->namespace());
         $this->assertEmpty($file->classes());
-        $phpClass = new PhpClass("Foo", [], []);
+        $phpClass = new PhpClass("Foo", [], [], "");
         $file->appendClass($phpClass);
         $this->assertEquals([$phpClass], $file->classes());
     }

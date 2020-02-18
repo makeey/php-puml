@@ -73,7 +73,7 @@ EOT
         $expectedClass = new PhpClass("Foo", [
             new PhpClassMember("\$test", "private", null),
             new PhpClassMember("\$baz", "public", "string"),
-        ], []);
+        ], [], "");
         $this->assertEquals($expectedClass, $class);
     }
 
@@ -111,7 +111,7 @@ EOT
         ], [
             new PhpMethod("test", [], "public"),
             new PhpMethod("test2", [], "public")
-        ]);
+        ], "");
         $this->assertEquals($expectedClass, $class);
 
     }
@@ -157,7 +157,7 @@ EOT
         ], [
             new PhpMethod("test", [], "public"),
             new PhpMethod("test2", [], "public"),
-        ]);
+        ], "");
         $this->assertEquals($expectedClass, $class);
     }
 
@@ -194,7 +194,7 @@ EOT
         ], [
             new PhpMethod("test", [], "public"),
             new PhpMethod("test2", [], "public"),
-        ]);
+        ], "");
         $this->assertEquals($expectedClass, $class);
     }
 
@@ -233,7 +233,7 @@ EOT
         ], [
             new PhpMethod("test", [], "public"),
             new PhpMethod("test2", [], "public"),
-        ]);
+        ], "");
         $this->assertEquals($expectedClass, $class);
     }
 
