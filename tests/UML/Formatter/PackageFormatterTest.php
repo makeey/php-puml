@@ -20,9 +20,11 @@ class PackageFormatterTest extends TestCase
                     [],
                     [
                         new UMLClass("Fee", [], [])
-                    ]
+                    ],
+                    []
                 )
             ],
+            [],
             []
         );
 
@@ -37,7 +39,9 @@ class Fee
     --
     
 }
+
 }
+
 
 
 }
@@ -56,16 +60,19 @@ EOT;
                     [],
                     [
                         new UMLClass("Fee", [], [])
-                    ]
+                    ],
+                    []
                 ),
                 new UMLPackage(
                     "Ret",
                     [],
                     [
                         new UMLClass("Too", [], [])
-                    ]
+                    ],
+                    []
                 )
             ],
+            [],
             []
         );
 
@@ -80,6 +87,7 @@ class Fee
     --
     
 }
+
 }
 package Foo.Ret
 {
@@ -89,7 +97,9 @@ class Too
     --
     
 }
+
 }
+
 
 
 }
@@ -111,15 +121,18 @@ EOT;
                             [],
                             [
                                 new UMLClass("Too", [], [])
-                            ]
+                            ],
+                            []
                         )
                     ],
                     [
                         new UMLClass("Fee", [], [])
-                    ]
+                    ],
+                    []
                 ),
 
             ],
+            [],
             []
         );
 
@@ -136,6 +149,7 @@ class Too
     --
     
 }
+
 }
 
 class Fee
@@ -144,7 +158,9 @@ class Fee
     --
     
 }
+
 }
+
 
 }
 EOT;

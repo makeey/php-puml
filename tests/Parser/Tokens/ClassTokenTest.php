@@ -9,7 +9,14 @@ class ClassTokenTest extends TestCase
 {
     public function testCanParseClass()
     {
-        $tokens = token_get_all(file_get_contents(__DIR__ . '/../../data/Parser/Token/OneClass.php'));
+        $tokens = token_get_all(<<<EOT
+<?php
+
+class OneClass
+{
+}
+EOT
+);
         foreach ($tokens as $id => $value) {
             if ($value[0] === T_CLASS) {
                 $class = new ClassToken($id, $tokens);

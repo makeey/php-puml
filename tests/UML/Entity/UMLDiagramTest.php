@@ -16,7 +16,7 @@ class UMLDiagramTest extends TestCase
             [
                 new UMLPackage("Foo", [
 
-                ], [new UMLClass("Foo", [], []),])
+                ], [new UMLClass("Foo", [], []),], [])
             ]
         );
 
@@ -24,7 +24,7 @@ class UMLDiagramTest extends TestCase
             [
                 new UMLPackage("Baz", [
 
-                ], [new UMLClass("Foo", [], []),])
+                ], [new UMLClass("Foo", [], []),], [])
             ]
         );
 
@@ -32,10 +32,10 @@ class UMLDiagramTest extends TestCase
             [
                 new UMLPackage("Foo", [
 
-                ], [new UMLClass("Foo", [], []),]),
+                ], [new UMLClass("Foo", [], []),], []),
                 new UMLPackage("Baz", [
 
-                ], [new UMLClass("Foo", [], []),])
+                ], [new UMLClass("Foo", [], []),], [])
             ]
         );
 
@@ -47,25 +47,25 @@ class UMLDiagramTest extends TestCase
         $umlDiagramLeft = new UMLDiagram(
             [
                 new UMLPackage("Foo", [
-                        new UMLPackage("Bar", [], [])]
-                    , [])
+                        new UMLPackage("Bar", [], [], [])]
+                    , [], [])
             ]
         );
 
         $umlDiagramRight = new UMLDiagram(
             [
                 new UMLPackage("Foo", [
-                        new UMLPackage("Zoo", [], [])]
-                    , [])
+                        new UMLPackage("Zoo", [], [], [])]
+                    , [], [])
             ]
         );
 
         $expectedDiagram = new UMLDiagram(
             [
                 new UMLPackage("Foo", [
-                    new UMLPackage("Bar", [], []),
-                    new UMLPackage("Zoo", [], [])
-                ], [])
+                    new UMLPackage("Bar", [], [], []),
+                    new UMLPackage("Zoo", [], [], [])
+                ], [], [])
             ]
         );
 
@@ -73,35 +73,38 @@ class UMLDiagramTest extends TestCase
     }
 
 
-    public function testMergeDiagramWithManyNestead()
+    public function testMergeDiagramWithManyNested()
     {
         $umlDiagramLeft = new UMLDiagram(
-        [
-            new UMLPackage("Foo",
-                [
-                    new UMLPackage(
-                        "Bar",
-                        [
-                            new UMLPackage(
-                                "Zar",
-                                [
+            [
+                new UMLPackage("Foo",
+                    [
+                        new UMLPackage(
+                            "Bar",
+                            [
+                                new UMLPackage(
+                                    "Zar",
+                                    [
 
-                                ],
-                                [  new UMLClass("ZarClass", [], [])]
-                            )
-                        ],
-                        [  new UMLClass("BarClass", [], [])]
-                    )
-                ]
-                ,
-                [
-                    new UMLClass("FooClass", [], [])
-                ]
-            )
-        ]
-    );
+                                    ],
+                                    [new UMLClass("ZarClass", [], [])],
+                                    []
+                                )
+                            ],
+                            [new UMLClass("BarClass", [], [])],
+                            []
+                        )
+                    ]
+                    ,
+                    [
+                        new UMLClass("FooClass", [], [])
+                    ],
+                    []
+                )
+            ]
+        );
 
-        $umlDiagramRight =  new UMLDiagram(
+        $umlDiagramRight = new UMLDiagram(
             [
                 new UMLPackage("Foo",
                     [
@@ -115,32 +118,37 @@ class UMLDiagramTest extends TestCase
                                     ],
                                     [
                                         new UMLClass("ZarClass2", [], [])
-                                    ]
+                                    ],
+                                    []
                                 )
                             ],
-                            [  new UMLClass("BarClass2", [], [])]
+                            [new UMLClass("BarClass2", [], [])],
+                            []
                         ),
 
-                         new UMLPackage(
-                             "Baz",
-                             [
-                                 new UMLPackage(
-                                     "Zaw",
-                                     [
+                        new UMLPackage(
+                            "Baz",
+                            [
+                                new UMLPackage(
+                                    "Zaw",
+                                    [
 
-                                     ],
-                                     [
-                                         new UMLClass("ZawClass", [], [])
-                                     ]
-                                 )
-                             ],
-                             [  new UMLClass("BazClass", [], [])]
-                         )
+                                    ],
+                                    [
+                                        new UMLClass("ZawClass", [], [])
+                                    ],
+                                    []
+                                )
+                            ],
+                            [new UMLClass("BazClass", [], [])],
+                            []
+                        )
                     ]
                     ,
                     [
                         new UMLClass("FooClass2", [], [])
-                    ]
+                    ],
+                    []
                 )
             ]
         );
@@ -161,13 +169,15 @@ class UMLDiagramTest extends TestCase
                                     [
                                         new UMLClass("ZarClass", [], []),
                                         new UMLClass("ZarClass2", [], [])
-                                    ]
+                                    ],
+                                    []
                                 )
                             ],
                             [
                                 new UMLClass("BarClass", [], []),
                                 new UMLClass("BarClass2", [], [])
-                            ]
+                            ],
+                            []
                         ),
                         new UMLPackage(
                             "Baz",
@@ -179,17 +189,19 @@ class UMLDiagramTest extends TestCase
                                     ],
                                     [
                                         new UMLClass("ZawClass", [], [])
-                                    ]
+                                    ],
+                                    []
                                 )
                             ],
-                            [  new UMLClass("BazClass", [], [])]
+                            [new UMLClass("BazClass", [], [])],
+                            []
                         )
-                    ]
-                    ,
+                    ],
                     [
                         new UMLClass("FooClass", [], []),
                         new UMLClass("FooClass2", [], [])
-                    ]
+                    ],
+                    []
                 )
             ]
         );

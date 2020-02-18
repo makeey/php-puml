@@ -3,6 +3,7 @@
 namespace PhpUML\UML\Formatter;
 
 use PhpUML\UML\Entity\UMLClass;
+use PhpUML\UML\Entity\UMLInterface;
 use PhpUML\UML\Entity\UMLPackage;
 
 class PackageFormatter
@@ -13,7 +14,10 @@ class PackageFormatter
             $classes = implode(PHP_EOL, array_map(static function (UMLClass $class): string {
                 return ClassFormatter::format($class);
             }, $package->classes()));
-            return "package {$prefix}{$package->name()}\n{\n" . $classes . "\n}\n";
+            $interfaces = implode(PHP_EOL, array_map(static function (UMLInterface $interface): string {
+                return InterfaceFormatter::format($interface);
+            }, $package->interfaces()));
+            return "package {$prefix}{$package->name()}\n{\n" . $classes . "\n{$interfaces}\n}\n";
         }
 
         $fullPrefix = $prefix === "" ? $package->name() . "." : $prefix . $package->name() . ".";
@@ -27,11 +31,16 @@ class PackageFormatter
             return ClassFormatter::format($class);
         }, $package->classes()));
 
+        $interfaces = implode(PHP_EOL, array_map(static function (UMLInterface $interface): string {
+            return InterfaceFormatter::format($interface);
+        }, $package->interfaces()));
+
         return <<<EOT
 package {$prefix}{$package->name()}
 {
 {$packages}
 {$classes}
+{$interfaces}
 }
 EOT;
 

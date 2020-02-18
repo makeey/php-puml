@@ -33,7 +33,7 @@ class UMLDiagram
         foreach ($packages as $package){
             if($package->name() === $newPackage->name()) {
                 $found = true;
-                $package->merchePackange($newPackage);
+                $package->mergePackage($newPackage);
             }
         }
         if($found === false) {
