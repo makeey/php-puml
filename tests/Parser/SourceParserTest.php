@@ -4,6 +4,7 @@ namespace PhpUML\Tests\Parser;
 
 use PhpUML\Parser\Entity\PhpClass;
 use PhpUML\Parser\Entity\PhpClassMember;
+use PhpUML\Parser\Entity\PhpInterface;
 use PhpUML\Parser\Entity\PhpMethod;
 use PhpUML\Parser\SourceParser;
 use PHPUnit\Framework\TestCase;
@@ -234,5 +235,45 @@ EOT
             new PhpMethod("test2", [], "public"),
         ]);
         $this->assertEquals($expectedClass, $class);
+    }
+
+
+
+    public function testCanParseInterface(): void
+    {
+        $parser = new SourceParser();
+        $file = $parser(<<<EOT
+<?php
+interface Foo 
+{
+}
+EOT
+        );
+        $this->assertCount(1, $file->interfaces());
+        /** @var PhpClass $class */
+        $class = $file->interfaces()[0];
+        $expectedInterface = new PhpInterface("Foo", [], "", null);
+        $this->assertEquals($expectedInterface, $class);
+    }
+
+
+    public function testCanParseInterfaceWithMethod(): void
+    {
+        $parser = new SourceParser();
+        $file = $parser(<<<EOT
+<?php
+interface Foo 
+{
+    public function bar();
+}
+EOT
+        );
+        $this->assertCount(1, $file->interfaces());
+        /** @var PhpClass $class */
+        $class = $file->interfaces()[0];
+        $expectedInterface = new PhpInterface("Foo", [
+            new PhpMethod("bar", [],'public')
+        ], "", null);
+        $this->assertEquals($expectedInterface, $class);
     }
 }

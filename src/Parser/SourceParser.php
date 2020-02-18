@@ -6,10 +6,12 @@ use Ds\Stack;
 use PhpUML\Parser\Entity\PhpClass;
 use PhpUML\Parser\Entity\PhpClassMember;
 use PhpUML\Parser\Entity\PhpFile;
+use PhpUML\Parser\Entity\PhpInterface;
 use PhpUML\Parser\Entity\PhpMethod;
 use PhpUML\Parser\Entity\PhpMethodParameter;
 use PhpUML\Parser\Tokens\ClassMethod;
 use PhpUML\Parser\Tokens\ClassToken;
+use PhpUML\Parser\Tokens\InterfaceToken;
 use PhpUML\Parser\Tokens\MemberToken;
 use PhpUML\Parser\Tokens\NameSpaceToken;
 
@@ -24,6 +26,8 @@ class SourceParser
     /** @var Stack */
     private $functions;
     /** @var Stack */
+    private $interfaces;
+    /** @var Stack */
     private $controlStructure;
 
     public function __construct()
@@ -31,6 +35,7 @@ class SourceParser
         $this->classes = new Stack();
         $this->methods = new Stack();
         $this->functions = new Stack();
+        $this->interfaces = new Stack();
         $this->controlStructure = new Stack();
         $this->file = new PhpFile();
     }
@@ -40,6 +45,7 @@ class SourceParser
         $this->classes = new Stack();
         $this->methods = new Stack();
         $this->functions = new Stack();
+        $this->interfaces = new Stack();
         $this->controlStructure = new Stack();
         $this->file = new PhpFile();
         $tokens = token_get_all($phpSourceCode);
@@ -57,7 +63,11 @@ class SourceParser
                 case T_FUNCTION:
                     $this->processFunctionToken($id, $tokens);
                     break;
+                case T_INTERFACE:
+                    $this->processInterfaceToken($id, $tokens);
+                    break;
                 case T_IF:
+                case T_ELSEIF:
                 case T_FOR:
                 case T_FOREACH:
                 case T_ELSE:
@@ -121,8 +131,37 @@ class SourceParser
             } else {
                 $this->controlStructure->push($tokens[0]);
             }
+        }elseif($this->interfaces->isEmpty() === false){
+            $methodToken = new ClassMethod($id, $tokens);
+            $this->interfaces->peek()->appendMethods(new PhpMethod($methodToken->functionName(),
+                array_map(
+                    static function (array $parameter): PhpMethodParameter {
+                        return new PhpMethodParameter(
+                            $parameter['variable'],
+                            $parameter['type']
+                        );
+                    },
+                    $methodToken->params()
+                ),
+                $methodToken->accessModifier()
+            ));
         } else {
             $this->functions->push("function not implemented");
+        }
+    }
+
+    private function processInterfaceToken(int $id, array $tokens): void
+    {
+        if ($this->interfaces->isEmpty() === true) {
+            $interfaceToken = new InterfaceToken($id, $tokens);
+            $this->interfaces->push(
+                new PhpInterface(
+                    $interfaceToken->interfaceName(),
+                    [],
+                    $this->file->namespace() ?? "",
+                    $interfaceToken->getParent()
+                )
+            );
         }
     }
 
@@ -144,6 +183,10 @@ class SourceParser
 
         if ($this->classes->isEmpty() === false && $this->methods->isEmpty()) {
             $this->file->appendClass($this->classes->pop());
+        }
+
+        if($this->interfaces->isEmpty() === false && $this->methods->isEmpty()) {
+            $this->file->appendInterface($this->interfaces->pop());
         }
 
         if ($this->classes->isEmpty() === false && $this->methods->isEmpty() === false) {

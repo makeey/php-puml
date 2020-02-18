@@ -20,7 +20,7 @@ class ClassToken extends AbstractToken
         return $this->className;
     }
 
-    private function parseClassName(): string
+    private function parseClassName(): ?string
     {
         $next = $this->tokens[$this->id + 1];
         if ($next[0] === T_WHITESPACE) {
@@ -29,6 +29,7 @@ class ClassToken extends AbstractToken
         if ($next[0] === T_STRING) {
             return $next[1];
         }
+        return null;
     }
 
     public function parent(): ?string

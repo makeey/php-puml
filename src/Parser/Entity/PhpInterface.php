@@ -2,33 +2,28 @@
 
 namespace PhpUML\Parser\Entity;
 
-class PhpClass
+class PhpInterface
 {
+    /** @var string **/
+    private $namespace;
     /** @var string */
-    private $name;
-    /** @var PhpClassMember[] */
-    private $properties;
+    private $interfaceName;
     /** @var PhpMethod[] */
     private $methods;
     /** @var string|null */
     private $parent;
 
-    public function __construct(string $name, array $properties, array $methods, ?string $parent = null)
+    public function __construct(string $interfaceName, array $methods, string $namespace, ?string $parent)
     {
-        $this->name = $name;
-        $this->properties = $properties;
+        $this->interfaceName = $interfaceName;
+        $this->namespace = $namespace;
         $this->methods = $methods;
         $this->parent = $parent;
     }
 
-    public function name(): string
+    public function interfaceName(): string
     {
-        return $this->name;
-    }
-
-    public function properties(): array
-    {
-        return $this->properties;
+        return $this->interfaceName;
     }
 
     public function methods(): array
@@ -41,10 +36,9 @@ class PhpClass
         return $this->parent;
     }
 
-    public function appendProperties(PhpClassMember $properties): self
+    public function namespace(): string
     {
-        $this->properties[] = $properties;
-        return $this;
+        return $this->namespace;
     }
 
     public function appendMethods(PhpMethod $method): self
