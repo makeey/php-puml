@@ -13,7 +13,7 @@ use PhpUML\UML\Entity\UMLDiagram;
 use PhpUML\UML\Entity\UMLInterface;
 use PhpUML\UML\Entity\UMLMethod;
 use PhpUML\UML\Entity\UMLMethodParameter;
-use PhpUML\UML\Entity\UMLPackage;
+use PhpUML\UML\Entity\UMLNamespace;
 use PhpUML\UML\Entity\UMLProperty;
 
 class UmlDiagramFactory implements IUMLDiagramFactory
@@ -32,7 +32,7 @@ class UmlDiagramFactory implements IUMLDiagramFactory
     private function buildNestedPackages(array $packages, array $classes, array $intefraces, $i = 0)
     {
         if ($i === count($packages) - 1) {
-            return new UMLPackage($packages[$i], [], array_map(function (PhpClass $class): UMLClass {
+            return new UMLNamespace($packages[$i], [], array_map(function (PhpClass $class): UMLClass {
                 return $this->buildClassFromPhpClass($class);
             }, $classes),
                 array_map(function (PhpInterface $interface): UMLInterface {
@@ -40,7 +40,7 @@ class UmlDiagramFactory implements IUMLDiagramFactory
                 }, $intefraces)
             );
         }
-        return new UMLPackage(
+        return new UMLNamespace(
             $packages[$i],
             [$this->buildNestedPackages($packages, $classes, $intefraces, $i + 1)],
             [],
@@ -65,6 +65,7 @@ class UmlDiagramFactory implements IUMLDiagramFactory
                 $class->properties()
             ),
             $class->parent(),
+            $class->namespace(),
             $class->implements()
         );
     }

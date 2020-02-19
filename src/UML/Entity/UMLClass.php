@@ -14,14 +14,18 @@ class UMLClass
     private $extends;
     /** @var string[] */
     private $implements;
+    /** @var string */
+    private $namespace;
 
     public function __construct(
         string $className,
         array $methods,
         array $properties,
         ?string $extends = null,
+        ?string $namespaces = null,
         array $implements = [])
     {
+        $this->namespace = $namespaces;
         $this->className = $className;
         $this->methods = $methods;
         $this->properties = $properties;
@@ -48,8 +52,14 @@ class UMLClass
     {
         return $this->properties;
     }
+
     public function implements(): array
     {
         return $this->implements;
+    }
+
+    public function namespace(): ?string
+    {
+        return $this->namespace;
     }
 }

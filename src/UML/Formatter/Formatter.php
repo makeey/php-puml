@@ -6,7 +6,7 @@ namespace PhpUML\UML\Formatter;
 
 use PhpUML\UML\Entity\UMLClass;
 use PhpUML\UML\Entity\UMLDiagram;
-use PhpUML\UML\Entity\UMLPackage;
+use PhpUML\UML\Entity\UMLNamespace;
 
 class Formatter implements IFormatter
 {
@@ -24,45 +24,48 @@ class Formatter implements IFormatter
     private function formatUmlDiagram(UMLDiagram $diagram): string
     {
         return implode(" ", array_map(
-            function (UMLPackage $package): string {
+            function (UMLNamespace $package): string {
                 return $this->formatUmlPackage($package);
             }, $diagram->packages()));
     }
 
-    public function formatUmlPackage(UMLPackage $package): string
+    public function formatUmlPackage(UMLNamespace $package): string
     {
-        return PackageFormatter::format($package);
+        return NamespaceFormatter::format($package);
     }
 
     private function buildRelations(UMLDiagram $diagram): string
     {
         $classes = [];
-        array_map(function (UMLPackage $package) use (&$classes) {
+        array_map(function (UMLNamespace $package) use (&$classes) {
             self::collectAllClasses($package, $classes);
         }, $diagram->packages());
         $string = "";
         /** @var UMLClass $class */
         foreach ($classes as $class) {
+            $className = str_replace("\\\\", ".", $class->namespace() . "." . $class->className());
             if($class->extends() !== null) {
-                $string .= "{$class->className()} --> {$class->extends()}\n";
+                $extends = str_replace("\\\\", ".", $class->extends());
+                $string .= "{$className} --> {$extends}\n";
             }
             if($class->implements() !== []) {
                 foreach ($class->implements() as $interface) {
-                    $string .= "{$class->className()} --> {$interface}\n";
+                    $interface =  str_replace("\\\\", ".", $interface);
+                    $string .= "{$className} --> {$interface}\n";
                 }
             }
         }
         return $string;
     }
 
-    private static function collectAllClasses(UMLPackage $package, &$classes = [])
+    private static function collectAllClasses(UMLNamespace $package, &$classes = [])
     {
-        if ($package->packages() === []) {
+        if ($package->namespaces() === []) {
             return $classes = array_merge($classes, $package->classes());
         }
-        array_map(function (UMLPackage $package) use (&$classes) {
+        array_map(function (UMLNamespace $package) use (&$classes) {
             return self::collectAllClasses($package, $classes);
-        }, $package->packages());
+        }, $package->namespaces());
         return $classes = array_merge($classes, $package->classes());
     }
 }

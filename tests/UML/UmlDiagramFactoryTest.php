@@ -8,7 +8,7 @@ use PhpUML\Parser\Entity\PhpInterface;
 use PhpUML\UML\Entity\UMLClass;
 use PhpUML\UML\Entity\UMLDiagram;
 use PhpUML\UML\Entity\UMLInterface;
-use PhpUML\UML\Entity\UMLPackage;
+use PhpUML\UML\Entity\UMLNamespace;
 use PhpUML\UML\UmlDiagramFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -23,11 +23,11 @@ class UmlDiagramFactoryTest extends TestCase
 
         $expectedUmlDiagram = new UMLDiagram(
             [
-                new UMLPackage("Foo", [
-                    new UMLPackage("Bar", [
-                        new UMLPackage("Baz", [],
+                new UMLNamespace("Foo", [
+                    new UMLNamespace("Bar", [
+                        new UMLNamespace("Baz", [],
                             [
-                                new UMLClass("Foo", [], [])
+                                new UMLClass("Foo", [], [],null, "Foo\\\\Bar\\\\Baz")
                             ], [])
                     ], [], [])
                 ], [], [])
@@ -47,9 +47,9 @@ class UmlDiagramFactoryTest extends TestCase
         $phpFile->appendInterface($interface);
         $expectedUmlDiagram = new UMLDiagram(
             [
-                new UMLPackage("Foo", [
-                    new UMLPackage("Bar", [
-                        new UMLPackage("Baz", [],
+                new UMLNamespace("Foo", [
+                    new UMLNamespace("Bar", [
+                        new UMLNamespace("Baz", [],
                             [], [new UMLInterface("Foo", [])])
                     ], [], [])
                 ], [], [])

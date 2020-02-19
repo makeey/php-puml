@@ -2,25 +2,33 @@
 
 declare(strict_types=1);
 
+use function DI\autowire;
 use function DI\get;
+use PhpUML\Application;
+use PhpUML\Command\GenerateCommand;
 use PhpUML\FileCollector;
 use PhpUML\FileWriter;
+use PhpUML\IApplication;
 use PhpUML\IFileCollector;
 use PhpUML\IWriter;
+use PhpUML\Parser\TransformMiddleware\IFileTransform;
+use PhpUML\Parser\TransformMiddleware\NamespaceTransform;
 use PhpUML\UML\Formatter\Formatter;
 use PhpUML\UML\Formatter\IFormatter;
+use PhpUML\UML\IUMLDiagramFactory;
+use PhpUML\UML\UmlDiagramFactory;
 
 return [
-    IWriter::class => \DI\autowire(FileWriter::class),
-    \PhpUML\UML\IUMLDiagramFactory::class => \DI\autowire(\PhpUML\UML\UmlDiagramFactory::class),
+    IWriter::class => autowire(FileWriter::class),
+    IUMLDiagramFactory::class => autowire(UmlDiagramFactory::class),
     IFileCollector::class => function (): IFileCollector {
         return new FileCollector();
     },
     IFormatter::class => function (): IFormatter {
         return new Formatter();
     },
-    \PhpUML\Command\GenerateCommand::class => \DI\autowire()->constructor(get(\PhpUML\Generator::class)),
+    GenerateCommand::class => autowire()->constructor(get(\PhpUML\Generator::class)),
 
-    \PhpUML\IApplication::class => \DI\autowire(\PhpUML\Application::class)->constructor(get(\PhpUML\Command\GenerateCommand::class))
-
+    IApplication::class => autowire(Application::class)->constructor(get(GenerateCommand::class)),
+    IFileTransform::class => autowire(NamespaceTransform::class),
 ];

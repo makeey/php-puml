@@ -3,8 +3,8 @@
 namespace PhpUML\Tests\UML\Formatter;
 
 use PhpUML\UML\Entity\UMLClass;
-use PhpUML\UML\Entity\UMLPackage;
-use PhpUML\UML\Formatter\PackageFormatter;
+use PhpUML\UML\Entity\UMLNamespace;
+use PhpUML\UML\Formatter\NamespaceFormatter;
 use PHPUnit\Framework\TestCase;
 
 class PackageFormatterTest extends TestCase
@@ -12,10 +12,10 @@ class PackageFormatterTest extends TestCase
 
     public function testFormat(): void
     {
-        $package = new UMLPackage(
+        $package = new UMLNamespace(
             "Foo",
             [
-                new UMLPackage(
+                new UMLNamespace(
                     "Bar",
                     [],
                     [
@@ -29,10 +29,10 @@ class PackageFormatterTest extends TestCase
         );
 
         $expecterString = <<<EOT
-package Foo
-{
-package Foo.Bar
-{
+
+namespace Foo {
+
+namespace Foo.Bar {
 class Fee
 {
     
@@ -46,16 +46,16 @@ class Fee
 
 }
 EOT;
-        $this->assertEquals($expecterString, PackageFormatter::format($package));
+        $this->assertEquals($expecterString, NamespaceFormatter::format($package));
 
     }
 
     public function testFormatNestedPackages(): void
     {
-        $package = new UMLPackage(
+        $package = new UMLNamespace(
             "Foo",
             [
-                new UMLPackage(
+                new UMLNamespace(
                     "Bar",
                     [],
                     [
@@ -63,7 +63,7 @@ EOT;
                     ],
                     []
                 ),
-                new UMLPackage(
+                new UMLNamespace(
                     "Ret",
                     [],
                     [
@@ -77,10 +77,10 @@ EOT;
         );
 
         $expectedString = <<<EOT
-package Foo
-{
-package Foo.Bar
-{
+
+namespace Foo {
+
+namespace Foo.Bar {
 class Fee
 {
     
@@ -89,8 +89,8 @@ class Fee
 }
 
 }
-package Foo.Ret
-{
+
+namespace Foo.Ret {
 class Too
 {
     
@@ -104,19 +104,19 @@ class Too
 
 }
 EOT;
-        $this->assertEquals($expectedString, PackageFormatter::format($package));
+        $this->assertEquals($expectedString, NamespaceFormatter::format($package));
 
     }
 
     public function testFormatNested3Packages(): void
     {
-        $package = new UMLPackage(
+        $package = new UMLNamespace(
             "Foo",
             [
-                new UMLPackage(
+                new UMLNamespace(
                     "Bar",
                     [
-                        new UMLPackage(
+                        new UMLNamespace(
                             "Ret",
                             [],
                             [
@@ -137,12 +137,12 @@ EOT;
         );
 
         $expectedString = <<<EOT
-package Foo
-{
-package Foo.Bar
-{
-package Foo.Bar.Ret
-{
+
+namespace Foo {
+
+namespace Foo.Bar {
+
+namespace Foo.Bar.Ret {
 class Too
 {
     
@@ -164,7 +164,7 @@ class Fee
 
 }
 EOT;
-        $this->assertEquals($expectedString, PackageFormatter::format($package));
+        $this->assertEquals($expectedString, NamespaceFormatter::format($package));
 
     }
 }

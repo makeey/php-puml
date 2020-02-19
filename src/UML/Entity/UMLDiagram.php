@@ -6,7 +6,7 @@ namespace PhpUML\UML\Entity;
 
 class UMLDiagram
 {
-    /** @var UMLPackage[] */
+    /** @var UMLNamespace[] */
     private $packages;
 
     public function __construct(array $packages)
@@ -27,13 +27,13 @@ class UMLDiagram
         return $this;
     }
 
-    private function mergePackage(UMLPackage $newPackage, UMLPackage ...$packages)
+    private function mergePackage(UMLNamespace $newPackage, UMLNamespace ...$packages)
     {
         $found = false;
         foreach ($packages as $package){
             if($package->name() === $newPackage->name()) {
                 $found = true;
-                $package->mergePackage($newPackage);
+                $package->mergeNamespace($newPackage);
             }
         }
         if($found === false) {

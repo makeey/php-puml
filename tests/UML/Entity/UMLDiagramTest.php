@@ -4,7 +4,7 @@ namespace PhpUML\Tests\UML\Entity;
 
 use PhpUML\UML\Entity\UMLClass;
 use PhpUML\UML\Entity\UMLDiagram;
-use PhpUML\UML\Entity\UMLPackage;
+use PhpUML\UML\Entity\UMLNamespace;
 use PHPUnit\Framework\TestCase;
 
 class UMLDiagramTest extends TestCase
@@ -14,7 +14,7 @@ class UMLDiagramTest extends TestCase
     {
         $umlDiagramLeft = new UMLDiagram(
             [
-                new UMLPackage("Foo", [
+                new UMLNamespace("Foo", [
 
                 ], [new UMLClass("Foo", [], []),], [])
             ]
@@ -22,7 +22,7 @@ class UMLDiagramTest extends TestCase
 
         $umlDiagramRight = new UMLDiagram(
             [
-                new UMLPackage("Baz", [
+                new UMLNamespace("Baz", [
 
                 ], [new UMLClass("Foo", [], []),], [])
             ]
@@ -30,10 +30,10 @@ class UMLDiagramTest extends TestCase
 
         $expectedDiagram = new UMLDiagram(
             [
-                new UMLPackage("Foo", [
+                new UMLNamespace("Foo", [
 
                 ], [new UMLClass("Foo", [], []),], []),
-                new UMLPackage("Baz", [
+                new UMLNamespace("Baz", [
 
                 ], [new UMLClass("Foo", [], []),], [])
             ]
@@ -46,25 +46,25 @@ class UMLDiagramTest extends TestCase
     {
         $umlDiagramLeft = new UMLDiagram(
             [
-                new UMLPackage("Foo", [
-                        new UMLPackage("Bar", [], [], [])]
+                new UMLNamespace("Foo", [
+                        new UMLNamespace("Bar", [], [], [])]
                     , [], [])
             ]
         );
 
         $umlDiagramRight = new UMLDiagram(
             [
-                new UMLPackage("Foo", [
-                        new UMLPackage("Zoo", [], [], [])]
+                new UMLNamespace("Foo", [
+                        new UMLNamespace("Zoo", [], [], [])]
                     , [], [])
             ]
         );
 
         $expectedDiagram = new UMLDiagram(
             [
-                new UMLPackage("Foo", [
-                    new UMLPackage("Bar", [], [], []),
-                    new UMLPackage("Zoo", [], [], [])
+                new UMLNamespace("Foo", [
+                    new UMLNamespace("Bar", [], [], []),
+                    new UMLNamespace("Zoo", [], [], [])
                 ], [], [])
             ]
         );
@@ -77,12 +77,12 @@ class UMLDiagramTest extends TestCase
     {
         $umlDiagramLeft = new UMLDiagram(
             [
-                new UMLPackage("Foo",
+                new UMLNamespace("Foo",
                     [
-                        new UMLPackage(
+                        new UMLNamespace(
                             "Bar",
                             [
-                                new UMLPackage(
+                                new UMLNamespace(
                                     "Zar",
                                     [
 
@@ -106,12 +106,12 @@ class UMLDiagramTest extends TestCase
 
         $umlDiagramRight = new UMLDiagram(
             [
-                new UMLPackage("Foo",
+                new UMLNamespace("Foo",
                     [
-                        new UMLPackage(
+                        new UMLNamespace(
                             "Bar",
                             [
-                                new UMLPackage(
+                                new UMLNamespace(
                                     "Zar",
                                     [
 
@@ -126,10 +126,10 @@ class UMLDiagramTest extends TestCase
                             []
                         ),
 
-                        new UMLPackage(
+                        new UMLNamespace(
                             "Baz",
                             [
-                                new UMLPackage(
+                                new UMLNamespace(
                                     "Zaw",
                                     [
 
@@ -156,12 +156,12 @@ class UMLDiagramTest extends TestCase
 
         $expectedDiagram = new UMLDiagram(
             [
-                new UMLPackage("Foo",
+                new UMLNamespace("Foo",
                     [
-                        new UMLPackage(
+                        new UMLNamespace(
                             "Bar",
                             [
-                                new UMLPackage(
+                                new UMLNamespace(
                                     "Zar",
                                     [
 
@@ -179,10 +179,10 @@ class UMLDiagramTest extends TestCase
                             ],
                             []
                         ),
-                        new UMLPackage(
+                        new UMLNamespace(
                             "Baz",
                             [
-                                new UMLPackage(
+                                new UMLNamespace(
                                     "Zaw",
                                     [
 

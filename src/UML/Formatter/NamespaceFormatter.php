@@ -4,28 +4,28 @@ namespace PhpUML\UML\Formatter;
 
 use PhpUML\UML\Entity\UMLClass;
 use PhpUML\UML\Entity\UMLInterface;
-use PhpUML\UML\Entity\UMLPackage;
+use PhpUML\UML\Entity\UMLNamespace;
 
-class PackageFormatter
+class NamespaceFormatter
 {
-    public static function format(UMLPackage $package, string $prefix = ""): string
+    public static function format(UMLNamespace $package, string $prefix = ""): string
     {
-        if ($package->packages() === []) {
+        if ($package->namespaces() === []) {
             $classes = implode(PHP_EOL, array_map(static function (UMLClass $class): string {
                 return ClassFormatter::format($class);
             }, $package->classes()));
             $interfaces = implode(PHP_EOL, array_map(static function (UMLInterface $interface): string {
                 return InterfaceFormatter::format($interface);
             }, $package->interfaces()));
-            return "package {$prefix}{$package->name()}\n{\n" . $classes . "\n{$interfaces}\n}\n";
+            return "\nnamespace {$prefix}{$package->name()} {\n" . $classes . "\n{$interfaces}\n}\n";
         }
 
         $fullPrefix = $prefix === "" ? $package->name() . "." : $prefix . $package->name() . ".";
 
-        $packages = implode(array_map(function (UMLPackage $package) use ($fullPrefix): string {
+        $packages = implode(array_map(function (UMLNamespace $package) use ($fullPrefix): string {
             $formattedPackage = self::format($package, $fullPrefix);
             return $formattedPackage;
-        }, $package->packages()));
+        }, $package->namespaces()));
 
         $classes = implode(PHP_EOL, array_map(static function (UMLClass $class): string {
             return ClassFormatter::format($class);
@@ -36,8 +36,8 @@ class PackageFormatter
         }, $package->interfaces()));
 
         return <<<EOT
-package {$prefix}{$package->name()}
-{
+
+namespace {$prefix}{$package->name()} {
 {$packages}
 {$classes}
 {$interfaces}
