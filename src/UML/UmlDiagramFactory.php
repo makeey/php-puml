@@ -64,7 +64,8 @@ class UmlDiagramFactory implements IUMLDiagramFactory
             },
                 $class->properties()
             ),
-            $class->parent()
+            $class->parent(),
+            $class->implements()
         );
     }
 

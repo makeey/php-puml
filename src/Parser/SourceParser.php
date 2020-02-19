@@ -99,7 +99,8 @@ class SourceParser
                     [],
                     [],
                     $this->file->namespace() ?? "",
-                    $phpClassToken->parent()
+                    $phpClassToken->parent(),
+                    $phpClassToken->interfaces()
                 )
             );
         }

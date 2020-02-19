@@ -46,6 +46,11 @@ class Formatter implements IFormatter
             if($class->extends() !== null) {
                 $string .= "{$class->className()} --> {$class->extends()}\n";
             }
+            if($class->implements() !== []) {
+                foreach ($class->implements() as $interface) {
+                    $string .= "{$class->className()} --> {$interface}\n";
+                }
+            }
         }
         return $string;
     }

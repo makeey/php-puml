@@ -17,13 +17,21 @@ class PhpClass
     /** @var string[] */
     private $implements;
 
-    public function __construct(string $name, array $properties, array $methods, string $namespace, ?string $parent = null)
+    public function __construct(
+        string $name,
+        array $properties,
+        array $methods,
+        string $namespace,
+        ?string $parent = null,
+        array $implements = []
+    )
     {
         $this->name = $name;
         $this->properties = $properties;
         $this->methods = $methods;
         $this->namespace = $namespace;
         $this->parent = $parent;
+        $this->implements = $implements;
     }
 
     public function name(): string
