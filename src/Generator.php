@@ -43,14 +43,14 @@ class Generator
         $this->writer->setOutput($output);
         $files = $this->fileCollector->collect($path);
         $parser = $this->sourceParser;
-        $diagrams = array_map(function (PhpFile $file): UMLDiagram {
+        $diagrams = array_values(array_map(function (PhpFile $file): UMLDiagram {
             return $this->umlFactory->buildDiagram($file);
         }, array_map(function (string $filePath) use ($parser): PhpFile {
             return $parser(file_get_contents($filePath));
-        }, $files));
+        }, $files)));
         /** @var UMLDiagram $diagram */
-        $diagram = $diagrams[0];
-        for ($i = 1; $i < count($diagrams); $i++) {
+        $diagram = new UMLDiagram([]);
+        for ($i = 0; $i < count($diagrams); $i++) {
             $diagram->mergeDiagram($diagrams[$i]);
         }
         $this->writer->write($this->formatter->format($diagram));
