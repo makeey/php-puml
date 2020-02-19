@@ -14,6 +14,7 @@ use PhpUML\Parser\Tokens\ClassToken;
 use PhpUML\Parser\Tokens\InterfaceToken;
 use PhpUML\Parser\Tokens\MemberToken;
 use PhpUML\Parser\Tokens\NameSpaceToken;
+use PhpUML\Parser\Tokens\UseToken;
 
 class SourceParser
 {
@@ -53,6 +54,9 @@ class SourceParser
             switch ($token[0]) {
                 case T_NAMESPACE:
                     $this->processNameSpace($id, $tokens);
+                    break;
+                case T_USE:
+                    $this->processUseToken($id, $tokens);
                     break;
                 case T_CLASS:
                     $this->processClassToken($id, $tokens);
@@ -203,5 +207,15 @@ class SourceParser
                 $this->methods->pop()
             );
         }
+    }
+
+    private function processUseToken(int $id, array $tokens) {
+        $useToken = new UseToken($id, $tokens);
+        $this->file->appendUsedClass(
+            [
+                'name' => $useToken->parts()->peek(),
+                'fullName' => $useToken->fullName()
+            ]
+        );
     }
 }

@@ -238,7 +238,6 @@ EOT
     }
 
 
-
     public function testCanParseInterface(): void
     {
         $parser = new SourceParser();
@@ -272,8 +271,35 @@ EOT
         /** @var PhpClass $class */
         $class = $file->interfaces()[0];
         $expectedInterface = new PhpInterface("Foo", [
-            new PhpMethod("bar", [],'public')
+            new PhpMethod("bar", [], 'public')
         ], "", null);
         $this->assertEquals($expectedInterface, $class);
+    }
+
+    public function testCanParseUseClass(): void
+    {
+        $parser = new SourceParser();
+        $file = $parser(<<<EOT
+<?php
+use Bar;
+use Foor\Zoo;
+interface Foo 
+{
+    public function bar();
+}
+EOT
+        );
+        $expectedArray = [
+            [
+                'name' => 'Bar',
+                'fullName' => 'Bar'
+            ],
+            [
+                'name' => 'Zoo',
+                'fullName' => 'Foor\\\\Zoo'
+            ]
+        ];
+        $this->assertCount(2, $file->usedClasses());
+        $this->assertEquals($expectedArray, $file->usedClasses());
     }
 }

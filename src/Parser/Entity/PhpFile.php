@@ -10,6 +10,8 @@ class PhpFile
     private $classes = [];
     /** @var PhpInterface[] */
     private $interfaces = [];
+    /** @var array */
+    private $usedClasses;
 
     public function __construct()
     {
@@ -48,5 +50,21 @@ class PhpFile
     public function namespace(): ?string
     {
         return $this->namespace;
+    }
+
+    public function usedClasses(): array
+    {
+        return $this->usedClasses;
+    }
+
+    public function appendUsedClass(array $usedClass): self
+    {
+        if (array_key_exists('name', $usedClass) === false ||
+            array_key_exists('fullName', $usedClass) === false
+        ) {
+            throw new \InvalidArgumentException("Wrong format for used classes. Array must contains name and fullName");
+        }
+        $this->usedClasses[] = $usedClass;
+        return $this;
     }
 }
