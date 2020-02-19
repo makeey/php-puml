@@ -14,6 +14,8 @@ class PhpClass
     private $methods;
     /** @var string|null */
     private $parent;
+    /** @var string[] */
+    private $implements;
 
     public function __construct(string $name, array $properties, array $methods, string $namespace, ?string $parent = null)
     {
@@ -59,5 +61,10 @@ class PhpClass
     public function namespace(): string
     {
         return $this->namespace;
+    }
+
+    public function implements(): array
+    {
+        return $this->implements;
     }
 }
