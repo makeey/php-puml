@@ -9,7 +9,8 @@ class FunctionTokenTest extends TestCase
 {
     public function testCanParseClass(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -29,7 +30,8 @@ EOT
 
     public function testCanParseMethodWithOptionalParams(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -47,7 +49,8 @@ EOT
         $this->assertEquals("test", $functionToken->functionName());
         $this->assertCount(1, $functionToken->params());
 
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -68,7 +71,8 @@ EOT
 
     public function testCanParseMethodWithParams(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -88,7 +92,8 @@ EOT
         }
 
 
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -111,7 +116,8 @@ EOT
             }
         }
 
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -131,7 +137,8 @@ EOT
         }
 
 
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -151,6 +158,5 @@ EOT
                 $this->assertEquals("\$baz", $params[1]['variable']);
             }
         }
-
     }
 }

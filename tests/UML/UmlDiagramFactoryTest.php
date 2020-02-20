@@ -25,10 +25,14 @@ class UmlDiagramFactoryTest extends TestCase
             [
                 new UMLNamespace("Foo", [
                     new UMLNamespace("Bar", [
-                        new UMLNamespace("Baz", [],
+                        new UMLNamespace(
+                            "Baz",
+                            [],
                             [
-                                new UMLClass("Foo", [], [],null, "Foo\\\\Bar\\\\Baz")
-                            ], [])
+                                new UMLClass("Foo", [], [], null, "Foo\\\\Bar\\\\Baz")
+                            ],
+                            []
+                        )
                     ], [], [])
                 ], [], [])
             ]
@@ -49,8 +53,12 @@ class UmlDiagramFactoryTest extends TestCase
             [
                 new UMLNamespace("Foo", [
                     new UMLNamespace("Bar", [
-                        new UMLNamespace("Baz", [],
-                            [], [new UMLInterface("Foo", [])])
+                        new UMLNamespace(
+                            "Baz",
+                            [],
+                            [],
+                            [new UMLInterface("Foo", [])]
+                        )
                     ], [], [])
                 ], [], [])
             ]

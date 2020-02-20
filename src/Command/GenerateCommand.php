@@ -3,7 +3,6 @@
 
 namespace PhpUML\Command;
 
-
 use PhpUML\Generator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;

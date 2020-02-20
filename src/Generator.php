@@ -32,8 +32,7 @@ class Generator
         SourceParser $sourceParser,
         IFormatter $formatter,
         IFileTransform $fileTransform
-    )
-    {
+    ) {
         $this->writer = $writer;
         $this->fileCollector = $fileCollector;
         $this->umlFactory = $umlFactory;

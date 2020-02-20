@@ -9,7 +9,8 @@ class ClassMethodTest extends TestCase
 {
     public function testCanParseClass(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -30,7 +31,8 @@ EOT
 
     public function testCanParseMethodWithOptionalParams(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -49,7 +51,8 @@ EOT
         $this->assertCount(1, $classMethod->params());
         $this->assertEquals("public", $classMethod->accessModifier());
 
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo
 {
@@ -68,5 +71,4 @@ EOT
         $this->assertCount(1, $classMethod->params());
         $this->assertEquals("public", $classMethod->accessModifier());
     }
-
 }

@@ -32,9 +32,12 @@ class UmlDiagramFactory implements IUMLDiagramFactory
     private function buildNestedPackages(array $packages, array $classes, array $intefraces, $i = 0)
     {
         if ($i === count($packages) - 1) {
-            return new UMLNamespace($packages[$i], [], array_map(function (PhpClass $class): UMLClass {
-                return $this->buildClassFromPhpClass($class);
-            }, $classes),
+            return new UMLNamespace(
+                $packages[$i],
+                [],
+                array_map(function (PhpClass $class): UMLClass {
+                    return $this->buildClassFromPhpClass($class);
+                }, $classes),
                 array_map(function (PhpInterface $interface): UMLInterface {
                     return $this->buildInterfaceFromPhpInterface($interface);
                 }, $intefraces)
@@ -52,16 +55,21 @@ class UmlDiagramFactory implements IUMLDiagramFactory
     {
         return new UMLClass(
             $class->name(),
-            array_map(static function (PhpMethod $method): UMLMethod {
-                return new UMLMethod($method->name(), $method->accessModifier(), ...array_map(
-                    static function (PhpMethodParameter $parameter): UMLMethodParameter {
-                        return new UMLMethodParameter($parameter->name(), $parameter->type());
-                    }, $method->parameters()));
-            },
-                $class->methods()),
-            array_map(static function (PhpClassMember $method): UMLProperty {
-                return new UMLProperty($method->name(), $method->accessModifier(), $method->type());
-            },
+            array_map(
+                static function (PhpMethod $method): UMLMethod {
+                    return new UMLMethod($method->name(), $method->accessModifier(), ...array_map(
+                        static function (PhpMethodParameter $parameter): UMLMethodParameter {
+                            return new UMLMethodParameter($parameter->name(), $parameter->type());
+                        },
+                        $method->parameters()
+                    ));
+                },
+                $class->methods()
+            ),
+            array_map(
+                static function (PhpClassMember $method): UMLProperty {
+                    return new UMLProperty($method->name(), $method->accessModifier(), $method->type());
+                },
                 $class->properties()
             ),
             $class->parent(),
@@ -78,7 +86,9 @@ class UmlDiagramFactory implements IUMLDiagramFactory
                 return new UMLMethod($method->name(), $method->accessModifier(), ...array_map(
                     static function (PhpMethodParameter $parameter): UMLMethodParameter {
                         return new UMLMethodParameter($parameter->name(), $parameter->type());
-                    }, $method->parameters()));
+                    },
+                    $method->parameters()
+                ));
             }, $interface->methods())
         );
     }

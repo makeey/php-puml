@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class PhpFileTest extends TestCase
 {
-
     public function testAppendClass()
     {
         $file = new PhpFile();

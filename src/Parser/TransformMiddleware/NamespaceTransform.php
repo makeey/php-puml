@@ -7,7 +7,6 @@ use PhpUML\Parser\Entity\PhpFile;
 
 class NamespaceTransform implements IFileTransform
 {
-
     public function transform(PhpFile $phpFile): PhpFile
     {
         $newFile = new PhpFile();
@@ -26,7 +25,6 @@ class NamespaceTransform implements IFileTransform
                 );
             }, $phpFile->classes()))
             ->appendInterfaces(...$phpFile->interfaces());
-
     }
 
     private function modifyEntityName(?string $name, PhpFile $phpFile): ?string

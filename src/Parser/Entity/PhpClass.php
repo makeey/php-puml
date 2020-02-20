@@ -24,8 +24,7 @@ class PhpClass
         string $namespace,
         ?string $parent = null,
         array $implements = []
-    )
-    {
+    ) {
         $this->name = $name;
         $this->properties = $properties;
         $this->methods = $methods;

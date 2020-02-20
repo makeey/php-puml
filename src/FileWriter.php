@@ -20,7 +20,7 @@ class FileWriter implements IWriter
 
     public function write(string $write): void
     {
-        if($this->path === null) {
+        if ($this->path === null) {
             throw new \InvalidArgumentException("Output file path is null");
         }
         $file = fopen($this->path, "w+");

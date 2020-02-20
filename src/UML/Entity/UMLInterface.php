@@ -3,7 +3,6 @@
 
 namespace PhpUML\UML\Entity;
 
-
 class UMLInterface
 {
     /** @var string **/
@@ -26,5 +25,4 @@ class UMLInterface
     {
         return $this->name;
     }
-
 }

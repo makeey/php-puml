@@ -25,7 +25,7 @@ class PhpClassTest extends TestCase
         $methods = [];
         $properties = [];
         $class = new PhpClass($name, $properties, $methods, "");
-        $member = new PhpClassMember("bar", "public",'string');
+        $member = new PhpClassMember("bar", "public", 'string');
         $class->appendProperties($member);
         $this->assertEquals($name, $class->name());
         $this->assertEquals([$member], $class->properties());

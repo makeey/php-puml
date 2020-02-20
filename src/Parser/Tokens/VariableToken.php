@@ -3,15 +3,13 @@
 
 namespace PhpUML\Parser\Tokens;
 
-
 class VariableToken extends AbstractToken
 {
     protected $name;
 
     public function name()
     {
-        if($this->name === null)
-        {
+        if ($this->name === null) {
             $this->name = $this->parseName();
         }
         return $this->name;

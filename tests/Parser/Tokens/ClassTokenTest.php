@@ -9,14 +9,15 @@ class ClassTokenTest extends TestCase
 {
     public function testCanParseClass()
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 
 class OneClass
 {
 }
 EOT
-);
+        );
         foreach ($tokens as $id => $value) {
             if ($value[0] === T_CLASS) {
                 $class = new ClassToken($id, $tokens);
@@ -28,7 +29,8 @@ EOT
 
     public function testCanParseClassWithParentClass(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo extends Bar
 {
@@ -47,7 +49,8 @@ EOT
 
     public function testCanParseClassWithParentClassWithNameSpace(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo extends Bar\Baz
 {
@@ -66,7 +69,8 @@ EOT
 
     public function testCanParseClassWithParentClassAndOneInterface(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo extends Bar implements Baz
 {
@@ -87,7 +91,8 @@ EOT
     
     public function testCanParseClassWithParentClassAndTwoInterface(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo extends Bar implements Baz, Zoo
 {

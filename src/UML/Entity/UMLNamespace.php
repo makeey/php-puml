@@ -3,7 +3,6 @@
 
 namespace PhpUML\UML\Entity;
 
-
 class UMLNamespace
 {
     /** @var string */
@@ -45,19 +44,19 @@ class UMLNamespace
 
     public function mergeNamespace(UMLNamespace $namespace)
     {
-        if($namespace->name() === $this->name) {
+        if ($namespace->name() === $this->name) {
             $this->classes = array_merge($this->classes, $namespace->classes());
             $this->interfaces = array_merge($this->interfaces, $namespace->interfaces());
 
-            foreach ($namespace->namespaces() as $newNamespace){
+            foreach ($namespace->namespaces() as $newNamespace) {
                 $found = false;
                 foreach ($this->namespaces as $namespace) {
-                    if($namespace->name() === $newNamespace->name()) {
+                    if ($namespace->name() === $newNamespace->name()) {
                         $found = true;
                         $namespace->mergeNamespace($newNamespace);
                     }
                 }
-                if($found === false){
+                if ($found === false) {
                     $this->namespaces[] = $newNamespace;
                 }
             }

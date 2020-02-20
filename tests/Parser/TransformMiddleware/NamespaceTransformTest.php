@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class NamespaceTransformTest extends TestCase
 {
-
     public function testTransform()
     {
         $class = new PhpClass("Foo", [], [], "Root", "Bar");
@@ -35,7 +34,8 @@ class NamespaceTransformTest extends TestCase
                     "Name\\\\Space\\\\Test\\\\Bar"
                 )
             ],
-            $returnedFile->classes());
+            $returnedFile->classes()
+        );
     }
 
     public function testTransformWithInterfaces(): void
@@ -65,7 +65,8 @@ class NamespaceTransformTest extends TestCase
         $this->assertCount(3, $returnedFile->usedClasses());
         $this->assertEquals(
             [
-                new PhpClass("Foo",
+                new PhpClass(
+                    "Foo",
                     [],
                     [],
                     "Root",
@@ -73,6 +74,7 @@ class NamespaceTransformTest extends TestCase
                     ['JsonSerializable', "Name\\\\Space\\\\Test\\\\IFoo"]
                 )
             ],
-            $returnedFile->classes());
+            $returnedFile->classes()
+        );
     }
 }

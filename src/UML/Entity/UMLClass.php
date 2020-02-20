@@ -23,8 +23,8 @@ class UMLClass
         array $properties,
         ?string $extends = null,
         ?string $namespaces = null,
-        array $implements = [])
-    {
+        array $implements = []
+    ) {
         $this->namespace = $namespaces;
         $this->className = $className;
         $this->methods = $methods;

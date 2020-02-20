@@ -9,7 +9,7 @@ class ClassMethod extends FunctionToken
 
     public function accessModifier(): string
     {
-        if($this->accessModifier === null){
+        if ($this->accessModifier === null) {
             $this->accessModifier = $this->parseAccessModifier();
         }
         return $this->accessModifier;
@@ -19,8 +19,7 @@ class ClassMethod extends FunctionToken
     {
         $i = 0;
         $prev = $this->tokens[$this->id - $i];
-        while ($prev != "}" && $prev != ";" && $prev != "{")
-        {
+        while ($prev != "}" && $prev != ";" && $prev != "{") {
             if ($prev[0] >= T_PRIVATE && $prev[0] <= T_PUBLIC) {
                 return $prev[1];
             }
@@ -28,6 +27,5 @@ class ClassMethod extends FunctionToken
             $prev = $this->tokens[$this->id - $i];
         }
         return 'public';
-
     }
 }
