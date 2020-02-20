@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class PackageFormatterTest extends TestCase
 {
-
     public function testFormat(): void
     {
         $package = new UMLNamespace(
@@ -47,7 +46,6 @@ class Fee
 }
 EOT;
         $this->assertEquals($expecterString, NamespaceFormatter::format($package));
-
     }
 
     public function testFormatNestedPackages(): void
@@ -105,7 +103,6 @@ class Too
 }
 EOT;
         $this->assertEquals($expectedString, NamespaceFormatter::format($package));
-
     }
 
     public function testFormatNested3Packages(): void
@@ -165,6 +162,5 @@ class Fee
 }
 EOT;
         $this->assertEquals($expectedString, NamespaceFormatter::format($package));
-
     }
 }

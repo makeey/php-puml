@@ -20,7 +20,6 @@ class MemberToken extends VariableToken
         $i = 1;
         $prev = $this->tokens[$this->id - $i];
         while ($prev != "{" && $prev[0] != ";" && ($this->id - $i > 0)) {
-
             if ($prev[0] >= T_PRIVATE && $prev[0] <= T_PUBLIC) {
                 return $prev[1];
             }
@@ -32,8 +31,7 @@ class MemberToken extends VariableToken
 
     public function type(): ?string
     {
-        if($this->type === null)
-        {
+        if ($this->type === null) {
             $this->type = $this->parseType();
         }
         return $this->type;
@@ -44,10 +42,9 @@ class MemberToken extends VariableToken
         $i = 1;
         $prev = $this->tokens[$this->id - $i];
         while ($prev != "{" && $prev != ";" && ($this->id - $i > 0)) {
-
             if ($prev[0] === T_DOC_COMMENT) {
                 $matches = [];
-                if(preg_match("/@var(.*?)\*/m", $prev[1], $matches) !== false) {
+                if (preg_match("/@var(.*?)\*/m", $prev[1], $matches) !== false) {
                     return trim($matches[1] ?? "");
                 }
                 return "";

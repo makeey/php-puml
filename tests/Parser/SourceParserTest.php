@@ -14,7 +14,8 @@ class SourceParserTest extends TestCase
     public function testParseSimpleClassWithoutMethod(): void
     {
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 class Foo 
 {
@@ -32,7 +33,8 @@ EOT
     public function testParseTwoClassInOneFile(): void
     {
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 class Foo 
 {
@@ -57,7 +59,8 @@ EOT
     public function testCanParseClassWithPropertiesWithoutMethod(): void
     {
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 class Foo 
 {
@@ -80,7 +83,8 @@ EOT
     public function testCanParseClassWithPropertiesWithMethod(): void
     {
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 class Foo 
 {
@@ -113,15 +117,13 @@ EOT
             new PhpMethod("test2", [], "public")
         ], "");
         $this->assertEquals($expectedClass, $class);
-
     }
 
     public function testCanParseClassWithLoops(): void
     {
-
-
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 class Foo 
 {
@@ -163,10 +165,9 @@ EOT
 
     public function testCanParseClassWithSelfClass(): void
     {
-
-
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 class Foo 
 {
@@ -200,10 +201,9 @@ EOT
 
     public function testCanParseClassWithAnonFunction(): void
     {
-
-
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 class Foo 
 {
@@ -241,7 +241,8 @@ EOT
     public function testCanParseInterface(): void
     {
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 interface Foo 
 {
@@ -259,7 +260,8 @@ EOT
     public function testCanParseInterfaceWithMethod(): void
     {
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 interface Foo 
 {
@@ -279,7 +281,8 @@ EOT
     public function testCanParseUseClass(): void
     {
         $parser = new SourceParser();
-        $file = $parser(<<<EOT
+        $file = $parser(
+            <<<EOT
 <?php
 use Bar;
 use Foor\Zoo;

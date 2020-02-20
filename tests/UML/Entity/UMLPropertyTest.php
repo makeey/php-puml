@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class UMLPropertyTest extends TestCase
 {
-
     public function test__construct()
     {
         $name = "name";
@@ -17,7 +16,6 @@ class UMLPropertyTest extends TestCase
         $this->assertEquals($name, $property->name());
         $this->assertEquals($type, $property->type());
         $this->assertEquals($accessModifier, $property->accessModifier());
-
     }
 
     public function testCanAcceptTypeAsNull()

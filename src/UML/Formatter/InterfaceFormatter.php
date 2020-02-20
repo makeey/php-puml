@@ -3,7 +3,6 @@
 
 namespace PhpUML\UML\Formatter;
 
-
 use PhpUML\UML\Entity\UMLInterface;
 use PhpUML\UML\Entity\UMLMethod;
 

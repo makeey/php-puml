@@ -129,7 +129,8 @@ class SourceParser
         if ($this->classes->isEmpty() === false) {
             if ($this->methods->isEmpty() === true) {
                 $methodToken = new ClassMethod($id, $tokens);
-                $this->methods->push(new PhpMethod($methodToken->functionName(),
+                $this->methods->push(new PhpMethod(
+                    $methodToken->functionName(),
                     array_map(
                         static function (array $parameter): PhpMethodParameter {
                             return new PhpMethodParameter(
@@ -144,9 +145,10 @@ class SourceParser
             } else {
                 $this->controlStructure->push($tokens[0]);
             }
-        }elseif($this->interfaces->isEmpty() === false){
+        } elseif ($this->interfaces->isEmpty() === false) {
             $methodToken = new ClassMethod($id, $tokens);
-            $this->interfaces->peek()->appendMethods(new PhpMethod($methodToken->functionName(),
+            $this->interfaces->peek()->appendMethods(new PhpMethod(
+                $methodToken->functionName(),
                 array_map(
                     static function (array $parameter): PhpMethodParameter {
                         return new PhpMethodParameter(
@@ -198,7 +200,7 @@ class SourceParser
             $this->file->appendClass($this->classes->pop());
         }
 
-        if($this->interfaces->isEmpty() === false && $this->methods->isEmpty()) {
+        if ($this->interfaces->isEmpty() === false && $this->methods->isEmpty()) {
             $this->file->appendInterface($this->interfaces->pop());
         }
 
@@ -209,7 +211,8 @@ class SourceParser
         }
     }
 
-    private function processUseToken(int $id, array $tokens) {
+    private function processUseToken(int $id, array $tokens)
+    {
         $useToken = new UseToken($id, $tokens);
         $this->file->appendUsedClass(
             [

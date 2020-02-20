@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 
 class InterfaceFormatterTest extends TestCase
 {
-
     public function testFormat()
     {
         $interface = new UMLInterface("Foo", []);

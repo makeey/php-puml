@@ -7,10 +7,10 @@ use PHPUnit\Framework\TestCase;
 
 class MemberTokenTest extends TestCase
 {
-
     public function testCanParseMember(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo 
 {
@@ -46,20 +46,22 @@ EOT
                 ],
             ];
 
-        $this->assertEquals($expectedData,
+        $this->assertEquals(
+            $expectedData,
             array_map(static function (MemberToken $memberToken): array {
                 return [
                     'accessModifier' => $memberToken->accessModifier(),
                     'name' => $memberToken->name()
                 ];
-            }, $members));
-
+            }, $members)
+        );
     }
 
 
     public function testCanParseMemberWithType(): void
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php
 class Foo 
 {
@@ -106,17 +108,15 @@ EOT
                 ],
             ];
 
-        $this->assertEquals($expectedData,
+        $this->assertEquals(
+            $expectedData,
             array_map(static function (MemberToken $memberToken): array {
                 return [
                     'accessModifier' => $memberToken->accessModifier(),
                     'name' => $memberToken->name(),
                     'type' => $memberToken->type()
                 ];
-            }, $members));
-
+            }, $members)
+        );
     }
-
 }
-
-

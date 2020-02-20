@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class UMLDiagramTest extends TestCase
 {
-
     public function testCanMergeDiagramWithSimpleCase()
     {
         $umlDiagramLeft = new UMLDiagram(
@@ -47,16 +46,14 @@ class UMLDiagramTest extends TestCase
         $umlDiagramLeft = new UMLDiagram(
             [
                 new UMLNamespace("Foo", [
-                        new UMLNamespace("Bar", [], [], [])]
-                    , [], [])
+                        new UMLNamespace("Bar", [], [], [])], [], [])
             ]
         );
 
         $umlDiagramRight = new UMLDiagram(
             [
                 new UMLNamespace("Foo", [
-                        new UMLNamespace("Zoo", [], [], [])]
-                    , [], [])
+                        new UMLNamespace("Zoo", [], [], [])], [], [])
             ]
         );
 
@@ -77,7 +74,8 @@ class UMLDiagramTest extends TestCase
     {
         $umlDiagramLeft = new UMLDiagram(
             [
-                new UMLNamespace("Foo",
+                new UMLNamespace(
+                    "Foo",
                     [
                         new UMLNamespace(
                             "Bar",
@@ -94,8 +92,7 @@ class UMLDiagramTest extends TestCase
                             [new UMLClass("BarClass", [], [])],
                             []
                         )
-                    ]
-                    ,
+                    ],
                     [
                         new UMLClass("FooClass", [], [])
                     ],
@@ -106,7 +103,8 @@ class UMLDiagramTest extends TestCase
 
         $umlDiagramRight = new UMLDiagram(
             [
-                new UMLNamespace("Foo",
+                new UMLNamespace(
+                    "Foo",
                     [
                         new UMLNamespace(
                             "Bar",
@@ -143,8 +141,7 @@ class UMLDiagramTest extends TestCase
                             [new UMLClass("BazClass", [], [])],
                             []
                         )
-                    ]
-                    ,
+                    ],
                     [
                         new UMLClass("FooClass2", [], [])
                     ],
@@ -156,7 +153,8 @@ class UMLDiagramTest extends TestCase
 
         $expectedDiagram = new UMLDiagram(
             [
-                new UMLNamespace("Foo",
+                new UMLNamespace(
+                    "Foo",
                     [
                         new UMLNamespace(
                             "Bar",

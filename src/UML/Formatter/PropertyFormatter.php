@@ -17,7 +17,7 @@ class PropertyFormatter
         switch ($modifier) {
             case "public":
                 return "+";
-            case "private" :
+            case "private":
                 return "-";
             case "protected":
                 return "#";

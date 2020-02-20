@@ -3,7 +3,6 @@
 
 namespace PhpUML\UML\Formatter;
 
-
 use PhpUML\UML\Entity\UMLClass;
 use PhpUML\UML\Entity\UMLDiagram;
 use PhpUML\UML\Entity\UMLNamespace;
@@ -26,7 +25,9 @@ class Formatter implements IFormatter
         return implode(" ", array_map(
             function (UMLNamespace $package): string {
                 return $this->formatUmlPackage($package);
-            }, $diagram->packages()));
+            },
+            $diagram->packages()
+        ));
     }
 
     public function formatUmlPackage(UMLNamespace $package): string
@@ -44,11 +45,11 @@ class Formatter implements IFormatter
         /** @var UMLClass $class */
         foreach ($classes as $class) {
             $className = str_replace("\\\\", ".", $class->namespace() . "." . $class->className());
-            if($class->extends() !== null) {
+            if ($class->extends() !== null) {
                 $extends = str_replace("\\\\", ".", $class->extends());
                 $string .= "{$className} --> {$extends}\n";
             }
-            if($class->implements() !== []) {
+            if ($class->implements() !== []) {
                 foreach ($class->implements() as $interface) {
                     $interface =  str_replace("\\\\", ".", $interface);
                     $string .= "{$className} --> {$interface}\n";

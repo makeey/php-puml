@@ -11,7 +11,7 @@ class PhpMethodParameterTest extends TestCase
     {
         $name = "name";
         $type = "string";
-        $methodParams = new PhpMethodParameter($name,$type);
+        $methodParams = new PhpMethodParameter($name, $type);
         $this->assertEquals($name, $methodParams->name());
         $this->assertEquals($type, $methodParams->type());
     }
@@ -20,7 +20,7 @@ class PhpMethodParameterTest extends TestCase
     {
         $name = "name";
         $type = null;
-        $methodParams = new PhpMethodParameter($name,$type);
+        $methodParams = new PhpMethodParameter($name, $type);
         $this->assertEquals($name, $methodParams->name());
         $this->assertEquals("mixed", $methodParams->type());
     }

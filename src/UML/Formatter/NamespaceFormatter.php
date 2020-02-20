@@ -43,6 +43,5 @@ namespace {$prefix}{$package->name()} {
 {$interfaces}
 }
 EOT;
-
     }
 }

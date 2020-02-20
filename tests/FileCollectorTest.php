@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class FileCollectorTest extends TestCase
 {
-
     public function testCollect(): void
     {
         $array = FileCollector::collect(__DIR__."/data/Collector");
@@ -17,6 +16,6 @@ class FileCollectorTest extends TestCase
     public function testCanCollectOneFile(): void
     {
         $array = FileCollector::collect(__DIR__."/data/Collector/1.php");
-        $this->assertCount(1,$array);
+        $this->assertCount(1, $array);
     }
 }

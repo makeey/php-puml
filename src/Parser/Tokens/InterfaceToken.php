@@ -3,7 +3,6 @@
 
 namespace PhpUML\Parser\Tokens;
 
-
 class InterfaceToken extends AbstractToken
 {
     /** @var string */
@@ -13,7 +12,7 @@ class InterfaceToken extends AbstractToken
 
     public function interfaceName(): ?string
     {
-        if($this->interfaceName === null) {
+        if ($this->interfaceName === null) {
             $this->interfaceName = $this->parseInterfaceName();
         }
         return $this->interfaceName;
@@ -36,5 +35,4 @@ class InterfaceToken extends AbstractToken
         }
         return null;
     }
-
 }

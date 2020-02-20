@@ -3,7 +3,6 @@
 
 namespace PhpUML\Parser\TransformMiddleware;
 
-
 use PhpUML\Parser\Entity\PhpFile;
 
 interface IFileTransform

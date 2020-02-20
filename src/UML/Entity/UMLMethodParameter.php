@@ -3,7 +3,6 @@
 
 namespace PhpUML\UML\Entity;
 
-
 class UMLMethodParameter
 {
     /** @var string */

@@ -3,7 +3,6 @@
 
 namespace PhpUML\UML\Entity;
 
-
 class UMLDiagram
 {
     /** @var UMLNamespace[] */
@@ -21,7 +20,7 @@ class UMLDiagram
 
     public function mergeDiagram(UMLDiagram $diagram): self
     {
-        foreach ($diagram->packages() as $package){
+        foreach ($diagram->packages() as $package) {
             $this->mergePackage($package, ...$this->packages);
         }
         return $this;
@@ -30,15 +29,14 @@ class UMLDiagram
     private function mergePackage(UMLNamespace $newPackage, UMLNamespace ...$packages)
     {
         $found = false;
-        foreach ($packages as $package){
-            if($package->name() === $newPackage->name()) {
+        foreach ($packages as $package) {
+            if ($package->name() === $newPackage->name()) {
                 $found = true;
                 $package->mergeNamespace($newPackage);
             }
         }
-        if($found === false) {
+        if ($found === false) {
             $this->packages[] = $newPackage;
         }
     }
-
 }

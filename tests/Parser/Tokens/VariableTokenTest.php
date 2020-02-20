@@ -7,10 +7,10 @@ use PHPUnit\Framework\TestCase;
 
 class VariableTokenTest extends TestCase
 {
-
     public function testCanPaseOneVariable()
     {
-        $tokens = token_get_all(<<<EOT
+        $tokens = token_get_all(
+            <<<EOT
 <?php 
 class Tes{
 {

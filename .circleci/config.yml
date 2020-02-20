@@ -27,5 +27,8 @@ jobs:
           name: Install project dependencies
           command: php composer.phar install
       - run:
+          name: Run code style check
+          command: vendor/bin/php-cs-fixer fix --dry-run --diff ./
+      - run:
           name: Run Unit tests
           command: vendor/bin/phpunit

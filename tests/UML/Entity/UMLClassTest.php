@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class UMLClassTest extends TestCase
 {
-
     public function test__construct()
     {
         $name = "className";

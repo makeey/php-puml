@@ -26,6 +26,4 @@ class {$class->className()}
 }
 EOT;
     }
-
-
 }

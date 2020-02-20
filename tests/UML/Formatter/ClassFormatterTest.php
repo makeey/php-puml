@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class ClassFormatterTest extends TestCase
 {
-
     public function testFormat()
     {
         $properties  = [
@@ -54,6 +53,5 @@ class {$class->className()}
 }
 EOT;
         $this->assertEquals($expectedString, ClassFormatter::format($class));
-
     }
 }

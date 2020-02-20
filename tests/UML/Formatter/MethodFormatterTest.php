@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class MethodFormatterTest extends TestCase
 {
-
     public function testFormat(): void
     {
         $method = new UMLMethod(
