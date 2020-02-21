@@ -21,7 +21,7 @@ class UmlDiagramFactory implements IUMLDiagramFactory
     public function buildDiagram(PhpFile $file): UMLDiagram
     {
         $nameSpace = $file->namespace();
-        $nameSpaceParts = explode("\\\\", $nameSpace);
+        $nameSpaceParts = explode("\\\\", $nameSpace ?? '');
         return new UMLDiagram(
             [
                 $this->buildNestedPackages($nameSpaceParts, $file->classes(), $file->interfaces())
@@ -29,23 +29,30 @@ class UmlDiagramFactory implements IUMLDiagramFactory
         );
     }
 
-    private function buildNestedPackages(array $packages, array $classes, array $intefraces, $i = 0)
+    /**
+     * @param string[] $namespace
+     * @param UMLClass[] $classes
+     * @param UMLInterface[] $interfaces
+     * @param int $i
+     * @return UMLNamespace
+     */
+    private function buildNestedPackages(array $namespace, array $classes, array $interfaces, $i = 0): UMLNamespace
     {
-        if ($i === count($packages) - 1) {
+        if ($i === count($namespace) - 1) {
             return new UMLNamespace(
-                $packages[$i],
+                $namespace[$i],
                 [],
                 array_map(function (PhpClass $class): UMLClass {
                     return $this->buildClassFromPhpClass($class);
                 }, $classes),
                 array_map(function (PhpInterface $interface): UMLInterface {
                     return $this->buildInterfaceFromPhpInterface($interface);
-                }, $intefraces)
+                }, $interfaces)
             );
         }
         return new UMLNamespace(
-            $packages[$i],
-            [$this->buildNestedPackages($packages, $classes, $intefraces, $i + 1)],
+            $namespace[$i],
+            [$this->buildNestedPackages($namespace, $classes, $interfaces, $i + 1)],
             [],
             []
         );

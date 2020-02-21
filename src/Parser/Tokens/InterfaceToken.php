@@ -10,7 +10,7 @@ class InterfaceToken extends AbstractToken
     /** @var string|null */
     private $parent;
 
-    public function interfaceName(): ?string
+    public function interfaceName(): string
     {
         if ($this->interfaceName === null) {
             $this->interfaceName = $this->parseInterfaceName();
@@ -24,15 +24,13 @@ class InterfaceToken extends AbstractToken
         return $this->parent;
     }
 
-    private function parseInterfaceName(): ?string
+    private function parseInterfaceName(): string
     {
         $next = $this->tokens[$this->id + 1];
         if ($next[0] === T_WHITESPACE) {
             $next = $this->tokens[$this->id + 2];
         }
-        if ($next[0] === T_STRING) {
-            return $next[1];
-        }
-        return null;
+
+        return $next[1];
     }
 }

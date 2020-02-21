@@ -7,7 +7,12 @@ use RecursiveIteratorIterator;
 
 class FileCollector implements IFileCollector
 {
-    public function collect($path, &$result = []): array
+    /**
+     * @param string $path
+     * @param string[] $result
+     * @return string[]
+     */
+    public function collect(string $path, array &$result = []): array
     {
         if (is_file($path)) {
             return [$path];
@@ -20,7 +25,7 @@ class FileCollector implements IFileCollector
             $result[] = $file->getPathname();
         }
         return array_filter($result, static function (string $filePath): bool {
-            return preg_match('/^.+\.php$/i', $filePath);
+            return (bool)preg_match('/^.+\.php$/i', $filePath);
         });
     }
 }

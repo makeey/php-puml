@@ -20,15 +20,15 @@ class SourceParser
 {
     /** @var PhpFile */
     private $file;
-    /** @var Stack */
+    /** @var Stack<PhpClass> */
     private $classes;
-    /** @var Stack */
+    /** @var Stack<PhpMethod> */
     private $methods;
-    /** @var Stack */
+    /** @var Stack<string> */
     private $functions;
-    /** @var Stack */
+    /** @var Stack<PhpInterface> */
     private $interfaces;
-    /** @var Stack */
+    /** @var Stack<int> */
     private $controlStructure;
 
     public function __construct()
@@ -99,7 +99,7 @@ class SourceParser
             $phpClassToken = new ClassToken($id, $tokens);
             $this->classes->push(
                 new PhpClass(
-                    $phpClassToken->className(),
+                    $phpClassToken->className() ?? "anonClass",
                     [],
                     [],
                     $this->file->namespace() ?? "",
@@ -211,7 +211,7 @@ class SourceParser
         }
     }
 
-    private function processUseToken(int $id, array $tokens)
+    private function processUseToken(int $id, array $tokens): void
     {
         $useToken = new UseToken($id, $tokens);
         $this->file->appendUsedClass(

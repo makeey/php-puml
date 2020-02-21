@@ -22,7 +22,7 @@ class GenerateCommand extends Command
 
     protected static $defaultName = 'app:generate-uml';
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription("Generate UML")
             ->setHelp("Generate UML diagram for folder or single file");
@@ -30,11 +30,19 @@ class GenerateCommand extends Command
         $this->addArgument("output", InputArgument::REQUIRED);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln("Generating");
-        $this->generator->generate($input->getArgument('path'), $input->getArgument('output'));
-        $output->writeln("Done the uml in {$input->getArgument('output')}");
-        return 0;
+        $path = $input->getArgument('path');
+        $outputPath = $input->getArgument('output');
+        if (is_string($path) && is_string($outputPath)) {
+            $this->generator->generate($path, $outputPath);
+            $output->writeln("Done the uml in {$outputPath}");
+            return 0;
+        }else{
+            $output->write("wrong format for arguments");
+            return 1;
+        }
+
     }
 }

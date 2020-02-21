@@ -21,10 +21,10 @@ use PhpUML\UML\UmlDiagramFactory;
 return [
     IWriter::class => autowire(FileWriter::class),
     IUMLDiagramFactory::class => autowire(UmlDiagramFactory::class),
-    IFileCollector::class => function (): IFileCollector {
+    IFileCollector::class => static function (): IFileCollector {
         return new FileCollector();
     },
-    IFormatter::class => function (): IFormatter {
+    IFormatter::class => static function (): IFormatter {
         return new Formatter();
     },
     GenerateCommand::class => autowire()->constructor(get(\PhpUML\Generator::class)),

@@ -9,13 +9,15 @@ class FileCollectorTest extends TestCase
 {
     public function testCollect(): void
     {
-        $array = FileCollector::collect(__DIR__."/data/Collector");
+        $fileCollection = new FileCollector();
+        $array = $fileCollection->collect(__DIR__."/data/Collector");
         $this->assertCount(3, $array);
     }
 
     public function testCanCollectOneFile(): void
     {
-        $array = FileCollector::collect(__DIR__."/data/Collector/1.php");
+        $fileCollection = new FileCollector();
+        $array = $fileCollection->collect(__DIR__."/data/Collector/1.php");
         $this->assertCount(1, $array);
     }
 }

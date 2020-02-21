@@ -10,7 +10,7 @@ use PHPUnit\Framework\TestCase;
 
 class ClassFormatterTest extends TestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $properties  = [
             new UMLProperty("bar", "private", "float")

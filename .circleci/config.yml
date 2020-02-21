@@ -30,5 +30,8 @@ jobs:
           name: Run code style check
           command: vendor/bin/php-cs-fixer fix --dry-run --diff ./
       - run:
+          name: Run code phpstan
+          command: vendor/bin/phpstan analyse src tests --level max
+      - run:
           name: Run Unit tests
           command: vendor/bin/phpunit

@@ -8,19 +8,12 @@ class PhpFile
 {
     /** @var string */
     private $namespace;
-    /** @var PhpClass */
+    /** @var PhpClass[] */
     private $classes = [];
     /** @var PhpInterface[] */
     private $interfaces = [];
     /** @var array */
-    private $usedClasses;
-
-    public function __construct()
-    {
-        $this->interfaces = [];
-        $this->classes = [];
-        $this->usedClasses = [];
-    }
+    private $usedClasses = [];
 
     public function appendClasses(PhpClass ...$classes): self
     {

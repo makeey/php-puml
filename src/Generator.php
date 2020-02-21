@@ -8,7 +8,6 @@ use PhpUML\Parser\TransformMiddleware\IFileTransform;
 use PhpUML\UML\Entity\UMLDiagram;
 use PhpUML\UML\Formatter\IFormatter;
 use PhpUML\UML\IUMLDiagramFactory;
-use PhpUML\UML\UmlDiagramFactory;
 
 class Generator
 {
@@ -16,7 +15,7 @@ class Generator
     private $writer;
     /** @var IFileCollector * */
     private $fileCollector;
-    /** @var UmlDiagramFactory * */
+    /** @var IUMLDiagramFactory * */
     private $umlFactory;
     /** @var SourceParser * */
     private $sourceParser;
@@ -42,7 +41,7 @@ class Generator
     }
 
 
-    public function generate(string $path, string $output)
+    public function generate(string $path, string $output): void
     {
         $this->writer->setOutput($output);
         $files = $this->fileCollector->collect($path);
@@ -50,9 +49,8 @@ class Generator
         $diagrams = array_values(array_map(function (PhpFile $file): UMLDiagram {
             return $this->umlFactory->buildDiagram($file);
         }, array_map(function (string $filePath) use ($parser): PhpFile {
-            return $this->fileTransform->transform(
-                $parser(file_get_contents($filePath))
-            );
+            $fileContent = file_get_contents($filePath);
+            return $this->fileTransform->transform($parser($fileContent !== false ? $fileContent : ''));
         }, $files)));
         /** @var UMLDiagram $diagram */
         $diagram = new UMLDiagram([]);

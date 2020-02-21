@@ -4,5 +4,10 @@ namespace PhpUML;
 
 interface IFileCollector
 {
-    public function collect($path, &$array = []): array;
+    /**
+     * @param string $path
+     * @param string[] $result
+     * @return array
+     */
+    public function collect(string $path, array &$result = []): array;
 }

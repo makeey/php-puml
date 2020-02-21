@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpUML\UML\Tests;
+namespace PhpUML\Tests\UML;
 
 use PhpUML\Parser\Entity\PhpClass;
 use PhpUML\Parser\Entity\PhpFile;
@@ -18,7 +18,7 @@ class UmlDiagramFactoryTest extends TestCase
     {
         $phpFile = new PhpFile();
         $phpFile->setNameSpace("Foo\\\\Bar\\\\Baz");
-        $class = new PhpClass("Foo", [], [], $phpFile->namespace());
+        $class = new PhpClass("Foo", [], [], $phpFile->namespace() ?? '');
         $phpFile->appendClass($class);
 
         $expectedUmlDiagram = new UMLDiagram(
@@ -47,7 +47,7 @@ class UmlDiagramFactoryTest extends TestCase
     {
         $phpFile = new PhpFile();
         $phpFile->setNameSpace("Foo\\\\Bar\\\\Baz");
-        $interface = new PhpInterface("Foo", [], $phpFile->namespace(), null);
+        $interface = new PhpInterface("Foo", [], $phpFile->namespace() ?? '', null);
         $phpFile->appendInterface($interface);
         $expectedUmlDiagram = new UMLDiagram(
             [

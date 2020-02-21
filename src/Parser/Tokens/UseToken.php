@@ -8,7 +8,7 @@ class UseToken extends AbstractToken
 {
     /** @var string */
     private $fullName;
-    /** @var Stack */
+    /** @var Stack<string> */
     private $parts;
 
     public function __construct(int $id, array $tokens)
@@ -17,6 +17,9 @@ class UseToken extends AbstractToken
         parent::__construct($id, $tokens);
     }
 
+    /**
+     * @return Stack<string>
+     */
     public function parts(): Stack
     {
         if ($this->parts->isEmpty() === true) {
@@ -30,7 +33,7 @@ class UseToken extends AbstractToken
         $i = 0;
         $next = $this->tokens[$this->id + $i];
         $this->fullName = "";
-        while ($next != ";") {
+        while ($next !== ";") {
             if ($next[0] === T_STRING) {
                 $this->parts->push($next[1]);
                 $this->fullName .= $next[1];

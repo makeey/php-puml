@@ -6,27 +6,34 @@ namespace PhpUML\UML\Entity;
 class UMLDiagram
 {
     /** @var UMLNamespace[] */
-    private $packages;
+    private $namespaces;
 
+    /**
+     * UMLDiagram constructor.
+     * @param UMLNamespace[] $packages
+     */
     public function __construct(array $packages)
     {
-        $this->packages = $packages;
+        $this->namespaces = $packages;
     }
 
-    public function packages(): array
+    /**
+     * @return UMLNamespace[]
+     */
+    public function namespaces(): array
     {
-        return $this->packages;
+        return $this->namespaces;
     }
 
     public function mergeDiagram(UMLDiagram $diagram): self
     {
-        foreach ($diagram->packages() as $package) {
-            $this->mergePackage($package, ...$this->packages);
+        foreach ($diagram->namespaces() as $package) {
+            $this->mergeNamespace($package, ...$this->namespaces);
         }
         return $this;
     }
 
-    private function mergePackage(UMLNamespace $newPackage, UMLNamespace ...$packages)
+    private function mergeNamespace(UMLNamespace $newPackage, UMLNamespace ...$packages): void
     {
         $found = false;
         foreach ($packages as $package) {
@@ -36,7 +43,7 @@ class UMLDiagram
             }
         }
         if ($found === false) {
-            $this->packages[] = $newPackage;
+            $this->namespaces[] = $newPackage;
         }
     }
 }

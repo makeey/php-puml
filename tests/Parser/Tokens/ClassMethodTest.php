@@ -20,13 +20,16 @@ class Foo
 }
 EOT
         );
+        $classMethod = null;
         foreach ($tokens as $id => $value) {
             if ($value[0] === T_FUNCTION) {
                 $classMethod = new ClassMethod($id, $tokens);
             }
         }
-        $this->assertEquals("test", $classMethod->functionName());
-        $this->assertEquals("public", $classMethod->accessModifier());
+        if ($classMethod !== null) {
+            $this->assertEquals("test", $classMethod->functionName());
+            $this->assertEquals("public", $classMethod->accessModifier());
+        }
     }
 
     public function testCanParseMethodWithOptionalParams(): void
@@ -42,15 +45,18 @@ class Foo
 }
 EOT
         );
+
+        $classMethod = null;
         foreach ($tokens as $id => $value) {
             if ($value[0] === T_FUNCTION) {
                 $classMethod = new ClassMethod($id, $tokens);
             }
         }
-        $this->assertEquals("test", $classMethod->functionName());
-        $this->assertCount(1, $classMethod->params());
-        $this->assertEquals("public", $classMethod->accessModifier());
-
+        if ($classMethod !== null) {
+            $this->assertEquals("test", $classMethod->functionName());
+            $this->assertCount(1, $classMethod->params());
+            $this->assertEquals("public", $classMethod->accessModifier());
+        }
         $tokens = token_get_all(
             <<<EOT
 <?php
@@ -67,8 +73,10 @@ EOT
                 $classMethod = new ClassMethod($id, $tokens);
             }
         }
-        $this->assertEquals("test", $classMethod->functionName());
-        $this->assertCount(1, $classMethod->params());
-        $this->assertEquals("public", $classMethod->accessModifier());
+        if ($classMethod !== null) {
+            $this->assertEquals("test", $classMethod->functionName());
+            $this->assertCount(1, $classMethod->params());
+            $this->assertEquals("public", $classMethod->accessModifier());
+        }
     }
 }

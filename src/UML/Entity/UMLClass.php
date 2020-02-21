@@ -14,9 +14,18 @@ class UMLClass
     private $extends;
     /** @var string[] */
     private $implements;
-    /** @var string */
+    /** @var string|null */
     private $namespace;
 
+    /**
+     * UMLClass constructor.
+     * @param string $className
+     * @param UMLMethod[] $methods
+     * @param UMLProperty[] $properties
+     * @param string|null $extends
+     * @param string|null $namespaces
+     * @param string[] $implements
+     */
     public function __construct(
         string $className,
         array $methods,
@@ -43,16 +52,25 @@ class UMLClass
         return $this->extends;
     }
 
+    /**
+     * @return UMLMethod[]
+     */
     public function methods(): array
     {
         return $this->methods;
     }
 
+    /**
+     * @return UMLProperty[]
+     */
     public function properties(): array
     {
         return $this->properties;
     }
 
+    /**
+     * @return string[]
+     */
     public function implements(): array
     {
         return $this->implements;

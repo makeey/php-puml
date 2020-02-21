@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class UMLDiagramTest extends TestCase
 {
-    public function testCanMergeDiagramWithSimpleCase()
+    public function testCanMergeDiagramWithSimpleCase(): void
     {
         $umlDiagramLeft = new UMLDiagram(
             [
@@ -41,7 +41,7 @@ class UMLDiagramTest extends TestCase
         $this->assertEquals($expectedDiagram, $umlDiagramLeft->mergeDiagram($umlDiagramRight));
     }
 
-    public function testMergeDiagram()
+    public function testMergeDiagram(): void
     {
         $umlDiagramLeft = new UMLDiagram(
             [
@@ -70,7 +70,7 @@ class UMLDiagramTest extends TestCase
     }
 
 
-    public function testMergeDiagramWithManyNested()
+    public function testMergeDiagramWithManyNested(): void
     {
         $umlDiagramLeft = new UMLDiagram(
             [

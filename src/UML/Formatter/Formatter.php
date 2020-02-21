@@ -9,6 +9,7 @@ use PhpUML\UML\Entity\UMLNamespace;
 
 class Formatter implements IFormatter
 {
+    /** @var string  */
     private $output = "";
 
     public function format(UMLDiagram $diagram): string
@@ -26,7 +27,7 @@ class Formatter implements IFormatter
             function (UMLNamespace $package): string {
                 return $this->formatUmlPackage($package);
             },
-            $diagram->packages()
+            $diagram->namespaces()
         ));
     }
 
@@ -38,9 +39,9 @@ class Formatter implements IFormatter
     private function buildRelations(UMLDiagram $diagram): string
     {
         $classes = [];
-        array_map(function (UMLNamespace $package) use (&$classes) {
+        array_map(function (UMLNamespace $package) use (&$classes): void {
             self::collectAllClasses($package, $classes);
-        }, $diagram->packages());
+        }, $diagram->namespaces());
         $string = "";
         /** @var UMLClass $class */
         foreach ($classes as $class) {
@@ -59,12 +60,17 @@ class Formatter implements IFormatter
         return $string;
     }
 
-    private static function collectAllClasses(UMLNamespace $package, &$classes = [])
+    /**
+     * @param UMLNamespace $package
+     * @param UMLClass[] $classes
+     * @return UMLClass[]
+     */
+    private static function collectAllClasses(UMLNamespace $package, &$classes = []): array
     {
         if ($package->namespaces() === []) {
             return $classes = array_merge($classes, $package->classes());
         }
-        array_map(function (UMLNamespace $package) use (&$classes) {
+        array_map(static function (UMLNamespace $package) use (&$classes): array {
             return self::collectAllClasses($package, $classes);
         }, $package->namespaces());
         return $classes = array_merge($classes, $package->classes());

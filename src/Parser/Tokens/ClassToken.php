@@ -5,14 +5,14 @@ namespace PhpUML\Parser\Tokens;
 
 class ClassToken extends AbstractToken
 {
-    /** @var string */
+    /** @var string|null */
     private $className;
-    /** @var string */
+    /** @var string|null */
     private $parent;
     /** @var string[] */
     private $interfaces;
 
-    public function className()
+    public function className(): ?string
     {
         if ($this->className === null) {
             $this->className = $this->parseClassName();
@@ -46,7 +46,7 @@ class ClassToken extends AbstractToken
         $next = $this->tokens[$i];
         $className = null;
         $isExtending = false;
-        while ($next != "{") {
+        while ($next !== "{") {
             if ($next[0] === T_IMPLEMENTS) {
                 break;
             }
@@ -75,13 +75,16 @@ class ClassToken extends AbstractToken
         return $this->interfaces;
     }
 
-    private function parseInterfaces()
+    /**
+     * @return string[]
+     */
+    private function parseInterfaces(): array
     {
         $i = $this->id + 1;
         $next = $this->tokens[$i];
         $interfaces = [];
         $isImplementing = false;
-        while ($next != "{") {
+        while ($next !== "{") {
             if ($next[0] === T_IMPLEMENTS) {
                 $isImplementing = true;
             }

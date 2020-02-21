@@ -14,6 +14,13 @@ class UMLNamespace
     /** @var UMLInterface[] */
     private $interfaces;
 
+    /**
+     * UMLNamespace constructor.
+     * @param string $name
+     * @param UMLNamespace[] $namespaces
+     * @param UMLClass[] $classes
+     * @param UMLInterface[] $interfaces
+     */
     public function __construct(string $name, array $namespaces, array $classes, array $interfaces)
     {
         $this->name = $name;
@@ -22,6 +29,9 @@ class UMLNamespace
         $this->interfaces = $interfaces;
     }
 
+    /**
+     * @return UMLNamespace[]
+     */
     public function namespaces(): array
     {
         return $this->namespaces;
@@ -32,23 +42,29 @@ class UMLNamespace
         return $this->name;
     }
 
+    /**
+     * @return UMLClass[]
+     */
     public function classes(): array
     {
         return $this->classes;
     }
 
+    /**
+     * @return UMLInterface[]
+     */
     public function interfaces(): array
     {
         return $this->interfaces;
     }
 
-    public function mergeNamespace(UMLNamespace $namespace)
+    public function mergeNamespace(UMLNamespace $leftNamespace): void
     {
-        if ($namespace->name() === $this->name) {
-            $this->classes = array_merge($this->classes, $namespace->classes());
-            $this->interfaces = array_merge($this->interfaces, $namespace->interfaces());
+        if ($leftNamespace->name() === $this->name) {
+            $this->classes = array_merge($this->classes, $leftNamespace->classes());
+            $this->interfaces = array_merge($this->interfaces, $leftNamespace->interfaces());
 
-            foreach ($namespace->namespaces() as $newNamespace) {
+            foreach ($leftNamespace->namespaces() as $newNamespace) {
                 $found = false;
                 foreach ($this->namespaces as $namespace) {
                     if ($namespace->name() === $newNamespace->name()) {

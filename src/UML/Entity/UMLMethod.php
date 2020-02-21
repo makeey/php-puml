@@ -6,11 +6,10 @@ class UMLMethod
 {
     /** @var string  */
     private $methodName;
-    /** @var string **/
+    /** @var string */
     private $accessModifier;
-
     /** @var UMLMethodParameter[] */
-    private $params = [];
+    private $params;
 
     public function __construct(string $methodName, string $accessModifier, UMLMethodParameter ...$params)
     {
@@ -19,11 +18,14 @@ class UMLMethod
         $this->params = $params;
     }
 
-    public function methodName()
+    public function methodName(): string
     {
         return $this->methodName;
     }
 
+    /**
+     * @return UMLMethodParameter[]
+     */
     public function params(): array
     {
         return $this->params;

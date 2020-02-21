@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class UseTokenTest extends TestCase
 {
-    public function testCanParseNameSpace()
+    public function testCanParseNameSpace(): void
     {
         $tokens = token_get_all(
             <<<EOT

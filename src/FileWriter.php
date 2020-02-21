@@ -4,13 +4,8 @@ namespace PhpUML;
 
 class FileWriter implements IWriter
 {
-    /** @var string*/
+    /** @var string|null */
     private $path;
-
-    public function __construct(string $path = null)
-    {
-        $this->path = $path;
-    }
 
     public function setOutput(string $path): IWriter
     {
@@ -24,7 +19,9 @@ class FileWriter implements IWriter
             throw new \InvalidArgumentException("Output file path is null");
         }
         $file = fopen($this->path, "w+");
-        fwrite($file, $write);
-        fclose($file);
+        if($file !== false) {
+            fwrite($file, $write);
+            fclose($file);
+        }
     }
 }

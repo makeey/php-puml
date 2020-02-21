@@ -9,7 +9,7 @@ class MethodFormatter
 {
     public static function format(UMLMethod $method): string
     {
-        $params = implode(", ", array_map(static function (UMLMethodParameter $parameter) {
+        $params = implode(", ", array_map(static function (UMLMethodParameter $parameter): string {
             return MethodParameterFormatter::format($parameter);
         }, $method->params()));
         $accessModifier = self::resolveAccessModifier($method->accessModifier());

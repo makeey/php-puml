@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class PhpFileTest extends TestCase
 {
-    public function testAppendClass()
+    public function testAppendClass(): void
     {
         $file = new PhpFile();
         $this->assertEquals(null, $file->namespace());
@@ -18,14 +18,14 @@ class PhpFileTest extends TestCase
         $this->assertEquals([$phpClass], $file->classes());
     }
 
-    public function test__construct()
+    public function test__construct(): void
     {
         $file = new PhpFile();
         $this->assertEquals(null, $file->namespace());
         $this->assertEmpty($file->classes());
     }
 
-    public function testSetNameSpace()
+    public function testSetNameSpace(): void
     {
         $file = new PhpFile();
         $this->assertEquals(null, $file->namespace());

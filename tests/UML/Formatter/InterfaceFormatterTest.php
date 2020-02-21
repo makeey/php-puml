@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class InterfaceFormatterTest extends TestCase
 {
-    public function testFormat()
+    public function testFormat(): void
     {
         $interface = new UMLInterface("Foo", []);
         $expectedString = "interface Foo \n{\n\t\n}\n";

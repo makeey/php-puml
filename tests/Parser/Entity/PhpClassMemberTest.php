@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class PhpClassMemberTest extends TestCase
 {
-    public function test__construct()
+    public function test__construct(): void
     {
         $name = "name";
         $type = null;

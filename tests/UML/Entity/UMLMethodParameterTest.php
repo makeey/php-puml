@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 
 class UMLMethodParameterTest extends TestCase
 {
-    public function test__construct()
+    public function test__construct(): void
     {
         $name = "foo";
         $type = "int";

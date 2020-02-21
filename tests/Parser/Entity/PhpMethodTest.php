@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class PhpMethodTest extends TestCase
 {
-    public function test__construct()
+    public function test__construct(): void
     {
         $methodName = 'methodName';
         $params = [];

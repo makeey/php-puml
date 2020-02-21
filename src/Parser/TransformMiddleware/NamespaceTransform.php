@@ -10,7 +10,7 @@ class NamespaceTransform implements IFileTransform
     public function transform(PhpFile $phpFile): PhpFile
     {
         $newFile = new PhpFile();
-        return $newFile->setNameSpace($phpFile->namespace())
+        return $newFile->setNameSpace($phpFile->namespace() ?? '')
             ->appendUsedClasses($phpFile->usedClasses())
             ->appendClasses(...array_map(function (PhpClass $class) use ($phpFile) : PhpClass {
                 return new PhpClass(
@@ -19,7 +19,7 @@ class NamespaceTransform implements IFileTransform
                     $class->methods(),
                     $class->namespace(),
                     $this->modifyEntityName($class->parent(), $phpFile),
-                    array_map(function ($interface) use ($phpFile): string {
+                    array_map(function ($interface) use ($phpFile): ?string {
                         return $this->modifyEntityName($interface, $phpFile);
                     }, $class->implements())
                 );

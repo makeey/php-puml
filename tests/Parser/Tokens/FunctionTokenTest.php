@@ -20,12 +20,15 @@ class Foo
 }
 EOT
         );
+        $functionToken = null;
         foreach ($tokens as $id => $value) {
             if ($value[0] === T_FUNCTION) {
                 $functionToken = new FunctionToken($id, $tokens);
             }
         }
-        $this->assertEquals("test", $functionToken->functionName());
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+        }
     }
 
     public function testCanParseMethodWithOptionalParams(): void
@@ -41,14 +44,16 @@ class Foo
 }
 EOT
         );
+        $functionToken = null;
         foreach ($tokens as $id => $value) {
             if ($value[0] === T_FUNCTION) {
                 $functionToken = new FunctionToken($id, $tokens);
             }
         }
-        $this->assertEquals("test", $functionToken->functionName());
-        $this->assertCount(1, $functionToken->params());
-
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+            $this->assertCount(1, $functionToken->params());
+        }
         $tokens = token_get_all(
             <<<EOT
 <?php
@@ -60,13 +65,16 @@ class Foo
 }
 EOT
         );
+        $functionToken = null;
         foreach ($tokens as $id => $value) {
             if ($value[0] === T_FUNCTION) {
                 $functionToken = new FunctionToken($id, $tokens);
             }
         }
-        $this->assertEquals("test", $functionToken->functionName());
-        $this->assertCount(1, $functionToken->params());
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+            $this->assertCount(1, $functionToken->params());
+        }
     }
 
     public function testCanParseMethodWithParams(): void
@@ -82,6 +90,7 @@ class Foo
 }
 EOT
         );
+
         foreach ($tokens as $id => $value) {
             if ($value[0] === T_FUNCTION) {
                 $functionToken = new FunctionToken($id, $tokens);

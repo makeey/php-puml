@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class NamespaceTransformTest extends TestCase
 {
-    public function testTransform()
+    public function testTransform(): void
     {
         $class = new PhpClass("Foo", [], [], "Root", "Bar");
         $userClass = [
