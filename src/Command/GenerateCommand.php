@@ -39,10 +39,9 @@ class GenerateCommand extends Command
             $this->generator->generate($path, $outputPath);
             $output->writeln("Done the uml in {$outputPath}");
             return 0;
-        }else{
+        } else {
             $output->write("wrong format for arguments");
             return 1;
         }
-
     }
 }
