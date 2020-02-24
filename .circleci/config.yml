@@ -34,6 +34,9 @@ jobs:
           command: vendor/bin/phpstan analyse src tests --level max
       - run:
           name: Run Unit tests
-          command: vendor/bin/phpunit --coverage-clover build/coverage-report
+          command: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+      - run:
+          name: Run code covarage tools
+          command: vendor/bin/php-coveralls
       - store_artifacts:
           path:  build/coverage-report

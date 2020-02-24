@@ -25,6 +25,7 @@
         "phpunit/phpunit": "^8.5",
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "^0.12.11",
-        "phpstan/phpstan-strict-rules": "^0.12.2"
+        "phpstan/phpstan-strict-rules": "^0.12.2",
+        "php-coveralls/php-coveralls": "^2.2"
     }
 }
