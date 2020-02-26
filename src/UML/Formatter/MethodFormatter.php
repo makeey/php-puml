@@ -7,26 +7,28 @@ use PhpUML\UML\Entity\UMLMethodParameter;
 
 class MethodFormatter
 {
-    public static function format(UMLMethod $method): string
+    /** @var AccessModifierFormatter */
+    private $accessModifierFormatter;
+    /** @var MethodParameterFormatter */
+    private $methodParametersFormatter;
+
+    public function __construct(AccessModifierFormatter $accessModifierFormatter, MethodParameterFormatter $methodParameterFormatter)
     {
-        $params = implode(", ", array_map(static function (UMLMethodParameter $parameter): string {
-            return MethodParameterFormatter::format($parameter);
-        }, $method->params()));
-        $accessModifier = self::resolveAccessModifier($method->accessModifier());
-        return "{$accessModifier} {$method->methodName()}({$params})" ;
+        $this->accessModifierFormatter = $accessModifierFormatter;
+        $this->methodParametersFormatter = $methodParameterFormatter;
     }
 
-    private static function resolveAccessModifier(string $modifier): string
+    public function format(UMLMethod $method): string
     {
-        switch ($modifier) {
-            case "public":
-                return "+";
-            case "private":
-                return "-";
-            case "protected":
-                return "#";
-            default:
-                return "";
-        }
+        $params = implode(", ", array_map(function (UMLMethodParameter $parameter): string {
+            return $this->methodParametersFormatter->format($parameter);
+        }, $method->params()));
+        $accessModifier = $this->resolveAccessModifier($method->accessModifier());
+        return "{$accessModifier} {$method->methodName()}({$params})";
+    }
+
+    private function resolveAccessModifier(string $modifier): string
+    {
+        return $this->accessModifierFormatter->resolveAccessModifier($modifier);
     }
 }

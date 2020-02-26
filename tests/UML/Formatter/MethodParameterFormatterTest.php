@@ -13,6 +13,7 @@ class MethodParameterFormatterTest extends TestCase
         $name = "foo";
         $type = "string";
         $param = new UMLMethodParameter($name, $type);
-        $this->assertEquals("foo: string", MethodParameterFormatter::format($param));
+        $methodParameterFormatter = new MethodParameterFormatter();
+        $this->assertEquals("foo: string", $methodParameterFormatter->format($param));
     }
 }

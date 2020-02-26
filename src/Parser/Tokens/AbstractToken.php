@@ -2,7 +2,7 @@
 
 namespace PhpUML\Parser\Tokens;
 
-class AbstractToken
+abstract class AbstractToken
 {
     /** @var int  */
     protected $id;

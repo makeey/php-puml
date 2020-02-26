@@ -24,9 +24,7 @@ return [
     IFileCollector::class => static function (): IFileCollector {
         return new FileCollector();
     },
-    IFormatter::class => static function (): IFormatter {
-        return new Formatter();
-    },
+    IFormatter::class => autowire(Formatter::class),
     GenerateCommand::class => autowire()->constructor(get(\PhpUML\Generator::class)),
 
     IApplication::class => autowire(Application::class)->constructor(get(GenerateCommand::class)),

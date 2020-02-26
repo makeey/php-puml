@@ -7,7 +7,7 @@ use PhpUML\UML\Entity\UMLMethodParameter;
 
 class MethodParameterFormatter
 {
-    public static function format(UMLMethodParameter $parameter):  string
+    public function format(UMLMethodParameter $parameter):  string
     {
         return "{$parameter->name()}: {$parameter->type()}";
     }

@@ -2,7 +2,7 @@
 
 namespace PhpUML\Parser\Entity;
 
-class PhpMethod
+final class PhpMethod
 {
     /** @var string */
     private $name;

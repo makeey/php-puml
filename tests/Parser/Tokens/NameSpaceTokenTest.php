@@ -2,7 +2,7 @@
 
 namespace PhpUML\Tests\Parser\Tokens;
 
-use PhpUML\Parser\Tokens\NameSpaceToken;
+use PhpUML\Parser\Tokens\NamespaceToken;
 use PHPUnit\Framework\TestCase;
 
 class NameSpaceTokenTest extends TestCase
@@ -20,7 +20,7 @@ EOT
         );
         foreach ($tokens as $id => $token) {
             if ($token[0] === T_NAMESPACE) {
-                $namesapce = new NameSpaceToken($id, $tokens);
+                $namesapce = new NamespaceToken($id, $tokens);
                 $this->assertEquals("Foo\\\\Bar\\\\Baz", $namesapce->name());
             }
         }

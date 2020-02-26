@@ -8,14 +8,25 @@ use PhpUML\UML\Entity\UMLNamespace;
 
 class NamespaceFormatter
 {
-    public static function format(UMLNamespace $package, string $prefix = ""): string
+    /** @var InterfaceFormatter */
+    private $interfaceFormatter;
+    /** @var ClassFormatter **/
+    private $classFormatter;
+
+    public function __construct(InterfaceFormatter $intrfaceFormatter, ClassFormatter $classFormatter)
+    {
+        $this->interfaceFormatter = $intrfaceFormatter;
+        $this->classFormatter = $classFormatter;
+    }
+
+    public function format(UMLNamespace $package, string $prefix = ""): string
     {
         if ($package->namespaces() === []) {
-            $classes = implode(PHP_EOL, array_map(static function (UMLClass $class): string {
-                return ClassFormatter::format($class);
+            $classes = implode(PHP_EOL, array_map(function (UMLClass $class): string {
+                return $this->classFormatter->format($class);
             }, $package->classes()));
-            $interfaces = implode(PHP_EOL, array_map(static function (UMLInterface $interface): string {
-                return InterfaceFormatter::format($interface);
+            $interfaces = implode(PHP_EOL, array_map(function (UMLInterface $interface): string {
+                return $this->interfaceFormatter->format($interface);
             }, $package->interfaces()));
             return "\nnamespace {$prefix}{$package->name()} {\n" . $classes . "\n{$interfaces}\n}\n";
         }
@@ -23,16 +34,16 @@ class NamespaceFormatter
         $fullPrefix = $prefix === "" ? $package->name() . "." : $prefix . $package->name() . ".";
 
         $packages = implode(array_map(function (UMLNamespace $package) use ($fullPrefix): string {
-            $formattedPackage = self::format($package, $fullPrefix);
+            $formattedPackage = $this->format($package, $fullPrefix);
             return $formattedPackage;
         }, $package->namespaces()));
 
-        $classes = implode(PHP_EOL, array_map(static function (UMLClass $class): string {
-            return ClassFormatter::format($class);
+        $classes = implode(PHP_EOL, array_map(function (UMLClass $class): string {
+            return $this->classFormatter->format($class);
         }, $package->classes()));
 
-        $interfaces = implode(PHP_EOL, array_map(static function (UMLInterface $interface): string {
-            return InterfaceFormatter::format($interface);
+        $interfaces = implode(PHP_EOL, array_map(function (UMLInterface $interface): string {
+            return $this->interfaceFormatter->format($interface);
         }, $package->interfaces()));
 
         return <<<EOT

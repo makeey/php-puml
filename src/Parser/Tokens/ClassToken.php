@@ -3,7 +3,7 @@
 
 namespace PhpUML\Parser\Tokens;
 
-class ClassToken extends AbstractToken
+final class ClassToken extends AbstractToken
 {
     /** @var string|null */
     private $className;

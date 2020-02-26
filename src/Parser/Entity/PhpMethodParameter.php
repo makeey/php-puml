@@ -2,7 +2,7 @@
 
 namespace PhpUML\Parser\Entity;
 
-class PhpMethodParameter
+final class PhpMethodParameter
 {
     private const DEFAULT_TYPE = 'mixed';
     /** @var string */

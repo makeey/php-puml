@@ -6,6 +6,7 @@ use PhpUML\Parser\Entity\PhpClass;
 use PhpUML\Parser\Entity\PhpClassMember;
 use PhpUML\Parser\Entity\PhpInterface;
 use PhpUML\Parser\Entity\PhpMethod;
+use PhpUML\Parser\Entity\PhpMethodParameter;
 use PhpUML\Parser\SourceParser;
 use PHPUnit\Framework\TestCase;
 
@@ -30,6 +31,28 @@ EOT
         $this->assertEmpty($class->properties());
     }
 
+    public function testParseSimpleClassWithMethod(): void
+    {
+        $parser = new SourceParser();
+        $file = $parser(
+            <<<EOT
+<?php
+class Foo 
+{
+    private function ala(string \$params)
+    {
+    }
+}
+EOT
+        );
+        $this->assertCount(1, $file->classes());
+        $expectedClass = new PhpClass("Foo", [], [
+            new PhpMethod('ala', [ new PhpMethodParameter('$params', 'string')], 'private')
+        ], "");
+        /** @var PhpClass $class */
+        $class = $file->classes()[0];
+        $this->assertEquals($expectedClass, $class);
+    }
     public function testParseTwoClassInOneFile(): void
     {
         $parser = new SourceParser();
@@ -276,14 +299,32 @@ EOT
             new PhpMethod("bar", [], 'public')
         ], "", null);
         $this->assertEquals($expectedInterface, $class);
+
+        $file = $parser(
+            <<<EOT
+<?php
+interface Foo 
+{
+    public function bar(Foo \$bar);
+}
+EOT
+        );
+        $this->assertCount(1, $file->interfaces());
+        /** @var PhpClass $class */
+        $class = $file->interfaces()[0];
+        $expectedInterface = new PhpInterface("Foo", [
+            new PhpMethod("bar", [ new PhpMethodParameter('$bar', 'Foo')], 'public')
+        ], "", null);
+        $this->assertEquals($expectedInterface, $class);
     }
 
-    public function testCanParseUseClass(): void
+    public function testCanParseUseClassAndNameSpace(): void
     {
         $parser = new SourceParser();
         $file = $parser(
             <<<EOT
 <?php
+namespace Application;
 use Bar;
 use Foor\Zoo;
 interface Foo 
@@ -304,5 +345,6 @@ EOT
         ];
         $this->assertCount(2, $file->usedClasses());
         $this->assertEquals($expectedArray, $file->usedClasses());
+        $this->assertEquals("Application", $file->namespace());
     }
 }

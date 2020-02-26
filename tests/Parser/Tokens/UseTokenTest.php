@@ -2,7 +2,7 @@
 
 namespace PhpUML\Tests\Parser\Tokens;
 
-use PhpUML\Parser\Tokens\NameSpaceToken;
+use PhpUML\Parser\Tokens\NamespaceToken;
 use PhpUML\Parser\Tokens\UseToken;
 use PHPUnit\Framework\TestCase;
 

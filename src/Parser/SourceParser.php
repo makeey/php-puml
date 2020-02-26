@@ -13,7 +13,7 @@ use PhpUML\Parser\Tokens\ClassMethod;
 use PhpUML\Parser\Tokens\ClassToken;
 use PhpUML\Parser\Tokens\InterfaceToken;
 use PhpUML\Parser\Tokens\MemberToken;
-use PhpUML\Parser\Tokens\NameSpaceToken;
+use PhpUML\Parser\Tokens\NamespaceToken;
 use PhpUML\Parser\Tokens\UseToken;
 
 class SourceParser
@@ -53,7 +53,7 @@ class SourceParser
         foreach ($tokens as $id => $token) {
             switch ($token[0]) {
                 case T_NAMESPACE:
-                    $this->processNameSpace($id, $tokens);
+                    $this->processNamespace($id, $tokens);
                     break;
                 case T_USE:
                     $this->processUseToken($id, $tokens);
@@ -87,9 +87,9 @@ class SourceParser
         return $this->file;
     }
 
-    private function processNameSpace(int $id, array $tokens): void
+    private function processNamespace(int $id, array $tokens): void
     {
-        $namespaceToken = new NameSpaceToken($id, $tokens);
+        $namespaceToken = new NamespaceToken($id, $tokens);
         $this->file->setNameSpace($namespaceToken->name());
     }
 
@@ -117,7 +117,7 @@ class SourceParser
             ($this->classes->peek())->appendProperties(
                 new PhpClassMember(
                     $memberToken->name(),
-                    $memberToken->accessModifier() ?? "var",
+                    $memberToken->accessModifier(),
                     $memberToken->type()
                 )
             );

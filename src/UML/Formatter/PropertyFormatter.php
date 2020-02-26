@@ -6,23 +6,17 @@ use PhpUML\UML\Entity\UMLProperty;
 
 class PropertyFormatter
 {
-    public static function format(UMLProperty $property): string
+    /** @var AccessModifierFormatter */
+    private $accessModifierFormatter;
+
+    public function __construct(AccessModifierFormatter $accessModifierFormatter)
     {
-        $accessModifier = self::resolveAccessModifier($property->accessModifier());
-        return "{$accessModifier} {$property->name()}: {$property->type()}";
+        $this->accessModifierFormatter = $accessModifierFormatter;
     }
 
-    private static function resolveAccessModifier(string $modifier): string
+    public function format(UMLProperty $property): string
     {
-        switch ($modifier) {
-            case "public":
-                return "+";
-            case "private":
-                return "-";
-            case "protected":
-                return "#";
-            default:
-                return "";
-        }
+        $accessModifier = $this->accessModifierFormatter->resolveAccessModifier($property->accessModifier());
+        return "{$accessModifier} {$property->name()}: {$property->type()}";
     }
 }

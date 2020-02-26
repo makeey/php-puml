@@ -10,11 +10,11 @@ class UMLDiagram
 
     /**
      * UMLDiagram constructor.
-     * @param UMLNamespace[] $packages
+     * @param UMLNamespace[] $namespaces
      */
-    public function __construct(array $packages)
+    public function __construct(array $namespaces)
     {
-        $this->namespaces = $packages;
+        $this->namespaces = $namespaces;
     }
 
     /**

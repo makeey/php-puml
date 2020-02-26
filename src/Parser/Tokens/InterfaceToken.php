@@ -3,7 +3,7 @@
 
 namespace PhpUML\Parser\Tokens;
 
-class InterfaceToken extends AbstractToken
+final class InterfaceToken extends AbstractToken
 {
     /** @var string */
     private $interfaceName;

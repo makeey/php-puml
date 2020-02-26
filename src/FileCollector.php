@@ -20,7 +20,7 @@ class FileCollector implements IFileCollector
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS));
         foreach ($files as $file) {
             if ($file->isDir()) {
-                self::collect($file, $result);
+                $this->collect($file, $result);
             }
             $result[] = $file->getPathname();
         }

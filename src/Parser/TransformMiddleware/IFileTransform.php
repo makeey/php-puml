@@ -1,4 +1,4 @@
-<?php
+<?php // @codeCoverageIgnoreStart
 
 
 namespace PhpUML\Parser\TransformMiddleware;

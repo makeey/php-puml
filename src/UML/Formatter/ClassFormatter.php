@@ -8,13 +8,23 @@ use PhpUML\UML\Entity\UMLProperty;
 
 class ClassFormatter
 {
-    public static function format(UMLClass $class): string
+    /** @var MethodFormatter */
+    private $methodFormatter;
+    /** @var PropertyFormatter */
+    private $propertyFormatter;
+
+    public function __construct(MethodFormatter $methodFormatter, PropertyFormatter $propertyFormatter)
     {
-        $property = implode("\n    ", array_map(static function (UMLProperty $property): string {
-            return PropertyFormatter::format($property);
+        $this->methodFormatter = $methodFormatter;
+        $this->propertyFormatter = $propertyFormatter;
+    }
+    public function format(UMLClass $class): string
+    {
+        $property = implode("\n    ", array_map(function (UMLProperty $property): string {
+            return $this->propertyFormatter->format($property);
         }, $class->properties()));
-        $methods = implode("\n    ", array_map(static function (UMLMethod $property): string {
-            return MethodFormatter::format($property);
+        $methods = implode("\n    ", array_map(function (UMLMethod $property): string {
+            return $this->methodFormatter->format($property);
         }, $class->methods()));
 
         return <<<EOT

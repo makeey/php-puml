@@ -2,7 +2,7 @@
 
 namespace PhpUML\Parser\Entity;
 
-class PhpClass
+final class PhpClass
 {
     /** @var string */
     private $namespace;

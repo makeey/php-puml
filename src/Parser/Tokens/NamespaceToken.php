@@ -2,7 +2,7 @@
 
 namespace PhpUML\Parser\Tokens;
 
-class NameSpaceToken extends AbstractToken
+class NamespaceToken extends AbstractToken
 {
     /** @var string */
     private $name;

@@ -4,12 +4,12 @@ namespace PhpUML\Parser\Tokens;
 
 class MemberToken extends VariableToken
 {
-    /** @var string|null */
+    /** @var string */
     private $accessModifier;
     /** @var string|null */
     private $type;
 
-    public function accessModifier(): ?string
+    public function accessModifier(): string
     {
         if ($this->accessModifier === null) {
             $this->accessModifier = $this->parseAccessModifier();
@@ -17,7 +17,7 @@ class MemberToken extends VariableToken
         return $this->accessModifier;
     }
 
-    private function parseAccessModifier(): ?string
+    private function parseAccessModifier(): string
     {
         $i = 1;
         $prev = $this->tokens[$this->id - $i];
@@ -28,7 +28,7 @@ class MemberToken extends VariableToken
             $i++;
             $prev = $this->tokens[$this->id - $i];
         }
-        return null;
+        return 'public';
     }
 
     public function type(): ?string

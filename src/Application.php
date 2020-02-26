@@ -16,6 +16,7 @@ class Application implements IApplication
         $this->application = new \Symfony\Component\Console\Application();
         $this->application->addCommands($commands);
     }
+
     public function run(): int
     {
         return $this->application->run();

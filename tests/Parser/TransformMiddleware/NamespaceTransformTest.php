@@ -38,6 +38,36 @@ class NamespaceTransformTest extends TestCase
         );
     }
 
+    public function testTransformParentClassInTheSamePackage(): void
+    {
+        $namespace = "Name\\\\Space";
+        $class = new PhpClass("Foo", [], [], $namespace, "Baz");
+        $userClass = [
+            'fullName' => "Name\\\\Space\\\\Test\\\\Bar",
+            'name' => "Bar"
+        ];
+        $file = new PhpFile();
+        $file->setNameSpace($namespace);
+        $file->appendUsedClass($userClass);
+        $file->appendClass($class);
+        $namespaceTransform = new NamespaceTransform();
+        $returnedFile = $namespaceTransform->transform($file);
+
+        $this->assertCount(1, $returnedFile->usedClasses());
+        $this->assertEquals(
+            [
+                new PhpClass(
+                    "Foo",
+                    [],
+                    [],
+                    $namespace,
+                    "Name\\\\Space\\\\Baz"
+                )
+            ],
+            $returnedFile->classes()
+        );
+    }
+
     public function testTransformWithInterfaces(): void
     {
         $class = new PhpClass("Foo", [], [], "Root", "Bar", ['JsonSerializable', "IFoo"]);

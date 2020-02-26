@@ -28,7 +28,11 @@ class FunctionToken extends AbstractToken
         if ($next[0] === T_STRING) {
             return $next[1];
         }
-        return "";
+
+        /**
+         * The situation when the function name intersect with php keywords (ex. namespace)
+         */
+        return "Unresolved name";
     }
 
     public function params(): array
