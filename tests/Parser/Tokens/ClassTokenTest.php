@@ -126,4 +126,28 @@ EOT
             $this->assertEquals("Zoo", $class->interfaces()[1]);
         }
     }
+
+    public function testCanProcessAnonClass(): void
+    {
+        $tokens = token_get_all(
+            <<<EOT
+<?php
+new class {
+    public function HelloWorld();
+}
+EOT
+        );
+        $class = null;
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_CLASS) {
+                $class = new ClassToken($id, $tokens);
+            }
+        }
+        if ($class !== null) {
+            $this->assertTrue($class->isAnonymous());
+            $this->assertEmpty($class->interfaces());
+            $this->assertNull($class->parent());
+            $this->assertEquals("class@anonymous", $class->className());
+        }
+    }
 }

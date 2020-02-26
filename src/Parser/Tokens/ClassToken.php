@@ -11,6 +11,8 @@ final class ClassToken extends AbstractToken
     private $parent;
     /** @var string[] */
     private $interfaces;
+    /** @var bool */
+    private $isAnonymous = false;
 
     public function className(): ?string
     {
@@ -29,7 +31,8 @@ final class ClassToken extends AbstractToken
         if ($next[0] === T_STRING) {
             return $next[1];
         }
-        return null;
+        $this->isAnonymous = true;
+        return 'class@anonymous';
     }
 
     public function parent(): ?string
@@ -42,29 +45,40 @@ final class ClassToken extends AbstractToken
 
     private function parseParent(): ?string
     {
-        $i = $this->id + 1;
-        $next = $this->tokens[$i];
-        $className = null;
-        $isExtending = false;
-        while ($next !== "{") {
-            if ($next[0] === T_IMPLEMENTS) {
-                break;
-            }
-            if ($next[0] === T_EXTENDS) {
-                $className = $this->tokens[$i + 2][1];
-                $isExtending = true;
-                $i += 2;
-            }
-            if ($next[0] === T_NS_SEPARATOR && $isExtending) {
-                $className .= "\\\\";
-            }
-            if ($next[0] === T_STRING && $isExtending) {
-                $className .= $next[1];
-            }
-            $i++;
+        if ($this->isAnonymous() === false) {
+            $i = $this->id + 1;
             $next = $this->tokens[$i];
+            $className = null;
+            $isExtending = false;
+            while ($next !== "{" && $next !== "(") {
+                if ($next[0] === T_IMPLEMENTS) {
+                    break;
+                }
+                if ($next[0] === T_EXTENDS) {
+                    $className = $this->tokens[$i + 2][1];
+                    $isExtending = true;
+                    $i += 2;
+                }
+                if ($next[0] === T_NS_SEPARATOR && $isExtending) {
+                    $className .= "\\\\";
+                }
+                if ($next[0] === T_STRING && $isExtending) {
+                    $className .= $next[1];
+                }
+                $i++;
+                $next = $this->tokens[$i];
+            }
+            return $className;
         }
-        return $className;
+        return null;
+    }
+
+    public function isAnonymous(): bool
+    {
+        if ($this->className === null) {
+            $this->className = $this->parseClassName();
+        }
+        return $this->isAnonymous;
     }
 
     public function interfaces(): array
@@ -80,20 +94,23 @@ final class ClassToken extends AbstractToken
      */
     private function parseInterfaces(): array
     {
-        $i = $this->id + 1;
-        $next = $this->tokens[$i];
-        $interfaces = [];
-        $isImplementing = false;
-        while ($next !== "{") {
-            if ($next[0] === T_IMPLEMENTS) {
-                $isImplementing = true;
-            }
-            if ($isImplementing && $next[0] === T_STRING) {
-                $interfaces[] = $this->tokens[$i][1];
-            }
-            $i++;
+        if ($this->isAnonymous() === false) {
+            $i = $this->id + 1;
             $next = $this->tokens[$i];
+            $interfaces = [];
+            $isImplementing = false;
+            while ($next !== "{") {
+                if ($next[0] === T_IMPLEMENTS) {
+                    $isImplementing = true;
+                }
+                if ($isImplementing && $next[0] === T_STRING) {
+                    $interfaces[] = $this->tokens[$i][1];
+                }
+                $i++;
+                $next = $this->tokens[$i];
+            }
+            return $interfaces;
         }
-        return $interfaces;
+        return [];
     }
 }

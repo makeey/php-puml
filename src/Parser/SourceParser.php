@@ -213,12 +213,14 @@ class SourceParser
 
     private function processUseToken(int $id, array $tokens): void
     {
-        $useToken = new UseToken($id, $tokens);
-        $this->file->appendUsedClass(
-            [
-                'name' => $useToken->parts()->peek(),
-                'fullName' => $useToken->fullName()
-            ]
-        );
+        if ($this->classes->isEmpty() === true) {
+            $useToken = new UseToken($id, $tokens);
+            $this->file->appendUsedClass(
+                [
+                    'name' => $useToken->parts()->peek(),
+                    'fullName' => $useToken->fullName()
+                ]
+            );
+        }
     }
 }

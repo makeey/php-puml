@@ -31,6 +31,33 @@ EOT
         $this->assertEmpty($class->properties());
     }
 
+
+    public function testParseSimpleClassAnonymousFuction(): void
+    {
+        $parser = new SourceParser();
+        $file = $parser(
+            <<<EOT
+<?php
+class Foo 
+{
+    public function bar()
+    {
+        \$i = 0;
+        array_map(static function (\$datum) use (\$i){
+            return \$datum + \$i;
+        }, \$data)
+    }
+}
+EOT
+        );
+        $this->assertCount(1, $file->classes());
+        /** @var PhpClass $class */
+        $class = $file->classes()[0];
+        $this->assertEquals("Foo", $class->name());
+        $this->assertCount(1, $class->methods());
+        $this->assertEmpty($class->properties());
+    }
+
     public function testParseSimpleClassWithMethod(): void
     {
         $parser = new SourceParser();
