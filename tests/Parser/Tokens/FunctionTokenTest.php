@@ -168,4 +168,161 @@ EOT
             }
         }
     }
+
+    public function testCanParseClassWithVariadic(): void
+    {
+        $tokens = token_get_all(
+            <<<EOT
+<?php
+class Foo
+{
+    public function test(Foo ...\$foes)
+    {
+    }
+}
+EOT
+        );
+        $functionToken = null;
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+            }
+        }
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+            $this->assertEquals([
+                [
+                    'type' => 'Foo[]',
+                    'variable' => '$foes'
+                ]
+            ], $functionToken->params());
+        }
+    }
+
+    public function testParseFunctionWithBooleanParamsWithDefaultValueTrue(): void
+    {
+        $tokens = token_get_all(
+            <<<EOT
+<?php
+class Foo
+{
+    public function test(bool \$variable = true ) : bool
+    {
+        return \$variable;
+    }
+}
+EOT
+        );
+        $functionToken = null;
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+            }
+        }
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+            $this->assertEquals([
+                [
+                    'type' => 'bool',
+                    'variable' => '$variable'
+                ]
+            ], $functionToken->params());
+        }
+    }
+
+    public function testCanParseFunctionWithArrayParamsWhichEmptyByDefault(): void
+    {
+        $tokens = token_get_all(
+            <<<EOT
+<?php
+class Foo
+{
+    public function test(array \$variable = [])
+    {
+        return \$variable;
+    }
+}
+EOT
+        );
+        $functionToken = null;
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+            }
+        }
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+            $this->assertEquals([
+                [
+                    'type' => 'array',
+                    'variable' => '$variable'
+                ]
+            ], $functionToken->params());
+        }
+    }
+    public function testParseFunctionWithBooleanParamsWithDefaultValueFalse(): void
+    {
+        $tokens = token_get_all(
+            <<<EOT
+<?php
+class Foo
+{
+    public function test(bool \$variable = false) : bool
+    {
+        return \$variable;
+    }
+}
+EOT
+        );
+        $functionToken = null;
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+            }
+        }
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+            $this->assertEquals([
+                [
+                    'type' => 'bool',
+                    'variable' => '$variable'
+                ]
+            ], $functionToken->params());
+        }
+    }
+
+    public function testCanParseTwoParametersWithDefaultValue(): void
+    {
+        $tokens = token_get_all(
+            <<<EOT
+<?php
+class Foo
+{
+    public function test(array \$variable = null, bool \$booleanVar = true)
+    {
+        return \$variable;
+    }
+}
+EOT
+        );
+        $functionToken = null;
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+            }
+        }
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+            $this->assertEquals([
+                [
+                    'type' => 'array',
+                    'variable' => '$variable'
+                ],
+                [
+                    'type' => 'bool',
+                    'variable' => '$booleanVar'
+                ]
+            ], $functionToken->params());
+        }
+    }
 }

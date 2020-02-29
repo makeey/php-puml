@@ -70,7 +70,7 @@ class Too
 
         $relationFormatterMock = $this->createMock(RelationFormatter::class);
         $relationFormatterMock->expects($this->once())
-            ->method('buildRelations')
+            ->method('format')
             ->with($diagram)
             ->willReturn("\n");
 

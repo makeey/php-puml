@@ -23,7 +23,7 @@ class Formatter implements IFormatter
     {
         $output = "@startuml " . PHP_EOL;
         $output .= $this->formatUmlDiagram($diagram);
-        $output .= $this->relationFormatter->buildRelations($diagram);
+        $output .= $this->relationFormatter->format($diagram);
         $output .= PHP_EOL . "@enduml";
         return $output;
     }

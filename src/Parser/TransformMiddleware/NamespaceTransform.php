@@ -29,7 +29,7 @@ class NamespaceTransform implements IFileTransform
 
     private function modifyEntityName(?string $name, PhpFile $phpFile): ?string
     {
-        if ($name !== null) {
+        if ($name !== null && $name[0] !== "\\") {
             foreach ($phpFile->usedClasses() as $usedClass) {
                 if ($name === $usedClass['name']) {
                     return $usedClass['fullName'];

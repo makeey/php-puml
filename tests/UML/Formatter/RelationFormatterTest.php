@@ -21,7 +21,7 @@ class RelationFormatterTest extends TestCase
 
         $relationFormatter = new RelationFormatter();
 
-        $this->assertEquals($expectedString, $relationFormatter->buildRelations($diagram));
+        $this->assertEquals($expectedString, $relationFormatter->format($diagram));
     }
 
     public function testBuildRelations(): void
@@ -48,6 +48,6 @@ class RelationFormatterTest extends TestCase
 
         $relationFormatter = new RelationFormatter();
 
-        $this->assertEquals($expectedString, $relationFormatter->buildRelations($diagram));
+        $this->assertEquals($expectedString, $relationFormatter->format($diagram));
     }
 }

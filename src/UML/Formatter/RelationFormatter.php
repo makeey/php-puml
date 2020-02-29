@@ -8,7 +8,7 @@ use PhpUML\UML\Entity\UMLNamespace;
 
 class RelationFormatter
 {
-    public function buildRelations(UMLDiagram $diagram): string
+    public function format(UMLDiagram $diagram): string
     {
         $classes = [];
         array_map(function (UMLNamespace $package) use (&$classes): void {
