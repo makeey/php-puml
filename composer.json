@@ -16,7 +16,9 @@
             "email": "makeey97@gmail.com"
         }
     ],
+    "license": "MIT",
     "require": {
+        "php": "^7.2",
         "php-di/php-di": "^6.0",
         "php-ds/php-ds": "^1.2",
         "symfony/console": "^5.0"
