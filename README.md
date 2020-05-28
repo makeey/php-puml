@@ -13,6 +13,9 @@ Generate class diagrams for your code in plant UML format.
 * Don't require an autoload file
 * Use PlantUML format for diagrams
 
+### Installation 
+`composer global require makeey/php-puml`
+
 ### Usage 
 `php bin/app generate path_to_folder output_path/file.puml `
 
