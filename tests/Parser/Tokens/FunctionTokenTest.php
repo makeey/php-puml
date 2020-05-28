@@ -260,6 +260,7 @@ EOT
             ], $functionToken->params());
         }
     }
+
     public function testParseFunctionWithBooleanParamsWithDefaultValueFalse(): void
     {
         $tokens = token_get_all(
@@ -322,6 +323,75 @@ EOT
                     'type' => 'bool',
                     'variable' => '$booleanVar'
                 ]
+            ], $functionToken->params());
+        }
+    }
+
+
+    public function testShouldParseReferenceType(): void
+    {
+        $tokens = token_get_all(
+            <<<EOT
+<?php
+class Foo
+{
+    public function test(int &\$b)
+    {
+        return ++\$b;
+    }
+}
+EOT
+        );
+        $functionToken = null;
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+            }
+        }
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+            $this->assertEquals([
+                [
+                    'type' => 'int',
+                    'variable' => '&$b'
+                ]
+            ], $functionToken->params());
+        }
+
+
+        $tokens = token_get_all(
+            <<<EOT
+<?php
+class Foo
+{
+    public function test(string \$firstParam, int &\$b, string \$thirdParam)
+    {
+        return ++\$b;
+    }
+}
+EOT
+        );
+        $functionToken = null;
+        foreach ($tokens as $id => $value) {
+            if ($value[0] === T_FUNCTION) {
+                $functionToken = new FunctionToken($id, $tokens);
+            }
+        }
+        if ($functionToken !== null) {
+            $this->assertEquals("test", $functionToken->functionName());
+            $this->assertEquals([
+                [
+                    'type' => 'string',
+                    'variable' => '$firstParam'
+                ],
+                [
+                    'type' => 'int',
+                    'variable' => '&$b'
+                ],
+                [
+                    'type' => 'string',
+                    'variable' => '$thirdParam'
+                ],
             ], $functionToken->params());
         }
     }

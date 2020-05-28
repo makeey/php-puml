@@ -4,7 +4,7 @@ namespace PhpUML\Parser\Tokens;
 
 class FunctionToken extends AbstractToken
 {
-    /** @var array  */
+    /** @var array */
     private static $DEFAULT_VALUE_FOR_TYPES = ['null', 'true', 'false', '[', ']'];
     /** @var array */
     protected $params;
@@ -41,22 +41,31 @@ class FunctionToken extends AbstractToken
     {
         if ($this->params === null) {
             $i = 4;
+
             do {
                 $next = $this->tokens[$this->id + $i];
                 if ($next[0] === T_STRING || $next[0] === T_ARRAY) {
                     if (in_array($next[1], self::$DEFAULT_VALUE_FOR_TYPES, true) === false) {
-                        if ($this->tokens[$this->id + $i + 2][1] === "...") {
+                        if (isset($this->tokens[$this->id + $i + 2][1]) && $this->tokens[$this->id + $i + 2][1] === "...") {
                             $this->params[] = [
-                                'type' => $next[1]."[]",
+                                'type' => $next[1] . "[]",
                                 'variable' => $this->tokens[$this->id + $i + 3][1] ?? "bugs"
                             ];
                             $i += 3;
                         } else {
-                            $this->params[] = [
-                                'type' => $next[1],
-                                'variable' => $this->tokens[$this->id + $i + 2][1]
-                            ];
-                            $i += 2;
+                            if (isset($this->tokens[$this->id + $i + 2][1])) {
+                                $this->params[] = [
+                                    'type' => $next[1],
+                                    'variable' => $this->tokens[$this->id + $i + 2][1]
+                                ];
+                                $i += 2;
+                            } else {
+                                $this->params[] = [
+                                    'type' => $next[1],
+                                    'variable' => $this->tokens[$this->id + $i + 2] . $this->tokens[$this->id + $i + 3][1]
+                                ];
+                                $i += 3;
+                            }
                         }
                     }
                 }
