@@ -5,14 +5,13 @@ namespace PhpUML\UML\Entity;
 
 class UMLNamespace
 {
-    /** @var string */
-    private $name;
+    private string $name;
     /** @var UMLNamespace[] */
-    private $namespaces;
+    private array $namespaces;
     /** @var UMLClass[] */
-    private $classes;
+    private array $classes;
     /** @var UMLInterface[] */
-    private $interfaces;
+    private array $interfaces;
 
     /**
      * UMLNamespace constructor.

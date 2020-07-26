@@ -8,9 +8,9 @@ use PhpUML\UML\Entity\UMLMethodParameter;
 class MethodFormatter
 {
     /** @var AccessModifierFormatter */
-    private $accessModifierFormatter;
+    private AccessModifierFormatter $accessModifierFormatter;
     /** @var MethodParameterFormatter */
-    private $methodParametersFormatter;
+    private MethodParameterFormatter $methodParametersFormatter;
 
     public function __construct(AccessModifierFormatter $accessModifierFormatter, MethodParameterFormatter $methodParameterFormatter)
     {

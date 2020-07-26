@@ -1,6 +1,5 @@
 <?php
 
-
 namespace PhpUML\UML\Formatter;
 
 use PhpUML\UML\Entity\UMLInterface;
@@ -8,8 +7,7 @@ use PhpUML\UML\Entity\UMLMethod;
 
 class InterfaceFormatter
 {
-    /** @var MethodFormatter */
-    private $methodFormatter;
+    private MethodFormatter $methodFormatter;
 
     public function __construct(MethodFormatter $methodFormatter)
     {

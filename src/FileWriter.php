@@ -4,8 +4,7 @@ namespace PhpUML;
 
 class FileWriter implements IWriter
 {
-    /** @var string|null */
-    private $path;
+    private ?string $path;
 
     public function setOutput(string $path): IWriter
     {

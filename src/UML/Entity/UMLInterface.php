@@ -5,10 +5,9 @@ namespace PhpUML\UML\Entity;
 
 class UMLInterface
 {
-    /** @var string **/
-    private $name;
+    private string $name;
     /** @var UMLMethod[] **/
-    private $methods;
+    private array $methods;
 
     /**
      * UMLInterface constructor.

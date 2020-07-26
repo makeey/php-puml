@@ -345,6 +345,39 @@ EOT
         $this->assertEquals($expectedInterface, $class);
     }
 
+    public function testCanParseClassWithNamespaceAndNamespaceAsAPropertyName(): void
+    {
+        $parser = new SourceParser();
+        $file = $parser(
+            <<<EOT
+<?php
+namespace Application;
+class Foo 
+{
+    private \$namespace;
+    public function namespace()
+    {
+    
+    }
+    
+}
+EOT
+        );
+       
+        $this->assertCount(1, $file->classes());
+        /** @var PhpClass $class */
+        $class = $file->classes()[0];
+        $this->assertEquals("Application", $class->namespace());
+        $this->assertCount(1, $class->properties());
+        /** @var PhpClassMember $property */
+        $property = $class->properties()[0];
+        $this->assertEquals("private", $property->accessModifier());
+        $this->assertEquals("\$namespace", $property->name());
+        $this->assertCount(1, $class->methods());
+        /** @var PhpMethod $method */
+        $method = $class->methods()[0];
+        $this->assertEquals("namespace", $method->name());
+    }
     public function testCanParseUseClassAndNameSpace(): void
     {
         $parser = new SourceParser();

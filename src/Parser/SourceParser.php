@@ -18,18 +18,17 @@ use PhpUML\Parser\Tokens\UseToken;
 
 class SourceParser
 {
-    /** @var PhpFile */
-    private $file;
+    private PhpFile $file;
     /** @var Stack<PhpClass> */
-    private $classes;
+    private Stack $classes;
     /** @var Stack<PhpMethod> */
-    private $methods;
+    private Stack $methods;
     /** @var Stack<string> */
-    private $functions;
+    private Stack $functions;
     /** @var Stack<PhpInterface> */
-    private $interfaces;
+    private Stack $interfaces;
     /** @var Stack<int> */
-    private $controlStructure;
+    private Stack $controlStructure;
 
     public function __construct()
     {
@@ -53,7 +52,9 @@ class SourceParser
         foreach ($tokens as $id => $token) {
             switch ($token[0]) {
                 case T_NAMESPACE:
-                    $this->processNamespace($id, $tokens);
+                    if (strpos($token[1], "$") === false && $this->classes->isEmpty() && $this->interfaces->isEmpty()) {
+                        $this->processNamespace($id, $tokens);
+                    }
                     break;
                 case T_USE:
                     $this->processUseToken($id, $tokens);
@@ -91,6 +92,19 @@ class SourceParser
     {
         $namespaceToken = new NamespaceToken($id, $tokens);
         $this->file->setNameSpace($namespaceToken->name());
+    }
+
+    private function processUseToken(int $id, array $tokens): void
+    {
+        if ($this->classes->isEmpty() === true) {
+            $useToken = new UseToken($id, $tokens);
+            $this->file->appendUsedClass(
+                [
+                    'name' => $useToken->parts()->peek(),
+                    'fullName' => $useToken->fullName()
+                ]
+            );
+        }
     }
 
     private function processClassToken(int $id, array $tokens): void
@@ -207,19 +221,6 @@ class SourceParser
         if ($this->classes->isEmpty() === false && $this->methods->isEmpty() === false) {
             ($this->classes->peek())->appendMethods(
                 $this->methods->pop()
-            );
-        }
-    }
-
-    private function processUseToken(int $id, array $tokens): void
-    {
-        if ($this->classes->isEmpty() === true) {
-            $useToken = new UseToken($id, $tokens);
-            $this->file->appendUsedClass(
-                [
-                    'name' => $useToken->parts()->peek(),
-                    'fullName' => $useToken->fullName()
-                ]
             );
         }
     }

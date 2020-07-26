@@ -5,8 +5,7 @@ namespace PhpUML\Parser\Tokens;
 
 class VariableToken extends AbstractToken
 {
-    /** @var string */
-    protected $name;
+    protected ?string $name = null;
 
     public function name(): string
     {

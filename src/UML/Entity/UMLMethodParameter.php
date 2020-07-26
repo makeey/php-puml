@@ -5,10 +5,8 @@ namespace PhpUML\UML\Entity;
 
 class UMLMethodParameter
 {
-    /** @var string */
-    private $name;
-    /** @var string **/
-    private $type;
+    private string $name;
+    private string $type;
 
     public function __construct(string $name, string $type)
     {

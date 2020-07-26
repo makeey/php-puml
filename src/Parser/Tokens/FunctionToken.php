@@ -6,10 +6,8 @@ class FunctionToken extends AbstractToken
 {
     /** @var array */
     private static $DEFAULT_VALUE_FOR_TYPES = ['null', 'true', 'false', '[', ']'];
-    /** @var array */
-    protected $params;
-    /** @var string */
-    protected $functionName;
+    protected ?array $params = null;
+    protected ?string $functionName = null;
 
     public function functionName(): string
     {
@@ -34,7 +32,7 @@ class FunctionToken extends AbstractToken
         /**
          * The situation when the function name intersect with php keywords (ex. namespace)
          */
-        return "Unresolved name";
+        return $next[1];
     }
 
     public function params(): array

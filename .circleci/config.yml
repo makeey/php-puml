@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: php:7.2.17
+      - image: php:7.4
     steps:
       - run:
           name: Install system packages

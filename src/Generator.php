@@ -11,18 +11,12 @@ use PhpUML\UML\IUMLDiagramFactory;
 
 class Generator
 {
-    /** @var IWriter * */
-    private $writer;
-    /** @var IFileCollector * */
-    private $fileCollector;
-    /** @var IUMLDiagramFactory * */
-    private $umlFactory;
-    /** @var SourceParser * */
-    private $sourceParser;
-    /** @var IFormatter * */
-    private $formatter;
-    /** @var IFileTransform */
-    private $fileTransform;
+    private IWriter $writer;
+    private IFileCollector $fileCollector;
+    private IUMLDiagramFactory $umlFactory;
+    private SourceParser $sourceParser;
+    private IFormatter $formatter;
+    private IFileTransform $fileTransform;
 
     public function __construct(
         IWriter $writer,

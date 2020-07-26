@@ -119,4 +119,68 @@ EOT
             }, $members)
         );
     }
+    public function testCanParseTypedProperties(): void
+    {
+        $tokens = token_get_all(
+            <<<EOT
+<?php
+class Foo 
+{
+    private string \$privateMember;
+    protected array \$protectedMember;
+    public Foo \$publicMember;
+    public \Bar\Baz\Buz \$typedPropertyWithNamespace;
+    public \$nullType;
+}
+EOT
+        );
+
+        $members = [];
+        foreach ($tokens as $id => $token) {
+            if ($token[0] === T_VARIABLE) {
+                $members[] = new MemberToken($id, $tokens);
+            }
+        }
+
+        $this->assertCount(5, $members);
+        $expectedData =
+            [
+                [
+                    'accessModifier' => 'private',
+                    'name' => '$privateMember',
+                    'type' => 'string'
+                ],
+                [
+                    'accessModifier' => 'protected',
+                    'name' => '$protectedMember',
+                    'type' => 'array'
+                ],
+                [
+                    'accessModifier' => 'public',
+                    'name' => '$publicMember',
+                    'type' => 'Foo'
+                ],
+                [
+                    'accessModifier' => 'public',
+                    'name' => '$typedPropertyWithNamespace',
+                    'type' => '\Bar\Baz\Buz'
+                ],
+                [
+                    'accessModifier' => 'public',
+                    'name' => '$nullType',
+                    'type' => null
+                ],
+            ];
+
+        $this->assertEquals(
+            $expectedData,
+            array_map(static function (MemberToken $memberToken): array {
+                return [
+                    'accessModifier' => $memberToken->accessModifier(),
+                    'name' => $memberToken->name(),
+                    'type' => $memberToken->type()
+                ];
+            }, $members)
+        );
+    }
 }

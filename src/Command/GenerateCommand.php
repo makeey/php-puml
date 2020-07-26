@@ -11,16 +11,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class GenerateCommand extends Command
 {
-    /** @var Generator */
-    private $generator;
+    protected static $defaultName = 'generate';
+    private Generator $generator;
 
     public function __construct(Generator $generator, string $name = null)
     {
         $this->generator = $generator;
         parent::__construct($name);
     }
-
-    protected static $defaultName = 'generate';
 
     protected function configure(): void
     {

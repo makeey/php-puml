@@ -6,12 +6,8 @@ namespace PhpUML\UML\Entity;
 class UMLDiagram
 {
     /** @var UMLNamespace[] */
-    private $namespaces;
+    private array $namespaces;
 
-    /**
-     * UMLDiagram constructor.
-     * @param UMLNamespace[] $namespaces
-     */
     public function __construct(array $namespaces)
     {
         $this->namespaces = $namespaces;

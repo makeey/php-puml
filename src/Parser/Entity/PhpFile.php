@@ -6,14 +6,12 @@ use InvalidArgumentException;
 
 class PhpFile
 {
-    /** @var string */
-    private $namespace;
+    private ?string $namespace = null;
     /** @var PhpClass[] */
-    private $classes = [];
+    private array $classes = [];
     /** @var PhpInterface[] */
-    private $interfaces = [];
-    /** @var array */
-    private $usedClasses = [];
+    private array $interfaces = [];
+    private array $usedClasses = [];
 
     public function appendClasses(PhpClass ...$classes): self
     {

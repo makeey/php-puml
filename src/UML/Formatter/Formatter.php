@@ -8,10 +8,8 @@ use PhpUML\UML\Entity\UMLNamespace;
 
 class Formatter implements IFormatter
 {
-    /** @var NamespaceFormatter */
-    private $namespaceFormatter;
-    /** @var RelationFormatter */
-    private $relationFormatter;
+    private NamespaceFormatter $namespaceFormatter;
+    private RelationFormatter $relationFormatter;
 
     public function __construct(NamespaceFormatter $namespaceFormatter, RelationFormatter $relationFormatter)
     {

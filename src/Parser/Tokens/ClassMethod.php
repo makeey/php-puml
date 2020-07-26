@@ -4,8 +4,7 @@ namespace PhpUML\Parser\Tokens;
 
 final class ClassMethod extends FunctionToken
 {
-    /** @var string */
-    private $accessModifier;
+    private ?string $accessModifier = null;
 
     public function accessModifier(): string
     {

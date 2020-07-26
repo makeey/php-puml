@@ -1,6 +1,5 @@
 <?php
 
-
 namespace PhpUML\UML\Formatter;
 
 use PhpUML\UML\Entity\UMLMethodParameter;
