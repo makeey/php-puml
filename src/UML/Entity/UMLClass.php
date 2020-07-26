@@ -4,18 +4,15 @@ namespace PhpUML\UML\Entity;
 
 class UMLClass
 {
-    /** @var string */
-    private $className;
+    private string $className;
     /** @var UMLMethod[] */
-    private $methods;
+    private array $methods;
     /** @var UMLProperty[] */
-    private $properties;
-    /** @var string|null */
-    private $extends;
+    private array $properties;
+    private ?string $extends;
     /** @var string[] */
-    private $implements;
-    /** @var string|null */
-    private $namespace;
+    private array $implements;
+    private ?string $namespace;
 
     /**
      * UMLClass constructor.

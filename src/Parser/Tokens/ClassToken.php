@@ -5,14 +5,10 @@ namespace PhpUML\Parser\Tokens;
 
 final class ClassToken extends AbstractToken
 {
-    /** @var string|null */
-    private $className;
-    /** @var string|null */
-    private $parent;
-    /** @var string[] */
-    private $interfaces;
-    /** @var bool */
-    private $isAnonymous = false;
+    private ?string $className = null;
+    private ?string $parent = null;
+    private ?array $interfaces = null;
+    private bool $isAnonymous = false;
 
     public function className(): ?string
     {

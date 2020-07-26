@@ -6,8 +6,7 @@ use PhpUML\UML\Entity\UMLProperty;
 
 class PropertyFormatter
 {
-    /** @var AccessModifierFormatter */
-    private $accessModifierFormatter;
+    private AccessModifierFormatter $accessModifierFormatter;
 
     public function __construct(AccessModifierFormatter $accessModifierFormatter)
     {

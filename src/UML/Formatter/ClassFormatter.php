@@ -8,10 +8,8 @@ use PhpUML\UML\Entity\UMLProperty;
 
 class ClassFormatter
 {
-    /** @var MethodFormatter */
-    private $methodFormatter;
-    /** @var PropertyFormatter */
-    private $propertyFormatter;
+    private MethodFormatter $methodFormatter;
+    private PropertyFormatter $propertyFormatter;
 
     public function __construct(MethodFormatter $methodFormatter, PropertyFormatter $propertyFormatter)
     {

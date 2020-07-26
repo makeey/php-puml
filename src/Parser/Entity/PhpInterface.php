@@ -4,14 +4,11 @@ namespace PhpUML\Parser\Entity;
 
 final class PhpInterface
 {
-    /** @var string **/
-    private $namespace;
-    /** @var string */
-    private $interfaceName;
+    private string $namespace;
+    private string $interfaceName;
     /** @var PhpMethod[] */
-    private $methods;
-    /** @var string|null */
-    private $parent;
+    private array $methods;
+    private ?string $parent;
 
     public function __construct(string $interfaceName, array $methods, string $namespace, ?string $parent)
     {

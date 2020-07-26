@@ -4,12 +4,10 @@ namespace PhpUML\Parser\Entity;
 
 final class PhpMethod
 {
-    /** @var string */
-    private $name;
+    private string $name;
     /** @var PhpMethodParameter[] */
-    private $parameters;
-    /** @var string */
-    private $accessModifier;
+    private array $parameters;
+    private string $accessModifier;
 
     public function __construct(string $name, array $parameters, string $accessModifier)
     {
@@ -22,6 +20,7 @@ final class PhpMethod
     {
         return $this->accessModifier;
     }
+
     public function name(): string
     {
         return $this->name;

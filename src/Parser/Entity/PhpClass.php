@@ -4,18 +4,15 @@ namespace PhpUML\Parser\Entity;
 
 final class PhpClass
 {
-    /** @var string */
-    private $namespace;
-    /** @var string */
-    private $name;
+    private string $namespace;
+    private string $name;
     /** @var PhpClassMember[] */
-    private $properties;
+    private array $properties;
     /** @var PhpMethod[] */
-    private $methods;
-    /** @var string|null */
-    private $parent;
+    private array $methods;
+    private ?string $parent;
     /** @var string[] */
-    private $implements;
+    private array $implements;
 
     public function __construct(
         string $name,

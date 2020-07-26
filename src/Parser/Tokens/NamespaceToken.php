@@ -4,8 +4,7 @@ namespace PhpUML\Parser\Tokens;
 
 class NamespaceToken extends AbstractToken
 {
-    /** @var string */
-    private $name;
+    private ?string $name = null;
 
     public function name(): string
     {
@@ -20,7 +19,7 @@ class NamespaceToken extends AbstractToken
         $i = 1;
         $next = $this->tokens[$this->id + $i];
         $namespace = "";
-        while ($next != ";") {
+        while ($next != ";" && $next != '{') {
             if ($next[0] === T_STRING) {
                 $namespace .= $next[1];
             }

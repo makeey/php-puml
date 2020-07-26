@@ -5,10 +5,8 @@ namespace PhpUML\Parser\Tokens;
 
 final class InterfaceToken extends AbstractToken
 {
-    /** @var string */
-    private $interfaceName;
-    /** @var string|null */
-    private $parent;
+    private ?string $interfaceName = null;
+    private ?string $parent = null;
 
     public function interfaceName(): string
     {
@@ -16,12 +14,6 @@ final class InterfaceToken extends AbstractToken
             $this->interfaceName = $this->parseInterfaceName();
         }
         return $this->interfaceName;
-    }
-
-
-    public function getParent(): ?string
-    {
-        return $this->parent;
     }
 
     private function parseInterfaceName(): string
@@ -32,5 +24,10 @@ final class InterfaceToken extends AbstractToken
         }
 
         return $next[1];
+    }
+
+    public function getParent(): ?string
+    {
+        return $this->parent;
     }
 }

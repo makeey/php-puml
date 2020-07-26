@@ -4,10 +4,8 @@ namespace PhpUML\Parser\Tokens;
 
 class MemberToken extends VariableToken
 {
-    /** @var string */
-    private $accessModifier;
-    /** @var string|null */
-    private $type;
+    private ?string $accessModifier = null;
+    private ?string $type = null;
 
     public function accessModifier(): string
     {
@@ -50,10 +48,38 @@ class MemberToken extends VariableToken
                     return trim($matches[1] ?? "");
                 }
                 return "";
+            } else {
+                if ($prev[0] === T_ARRAY) {
+                    return $prev[1];
+                } else {
+                    if ($prev[0] === T_STRING) {
+                        if ($this->tokens[$this->id - $i - 1][0] == T_NS_SEPARATOR) {
+                            return $this->resolveFullTypeForTypedProperty($i);
+                        } else {
+                            return $prev[1];
+                        }
+                    }
+                }
             }
             $i++;
             $prev = $this->tokens[$this->id - $i];
         }
-        return  "";
+        return "";
+    }
+
+    private function resolveFullTypeForTypedProperty(int $i, string $res = ''): string
+    {
+        if ($this->id - $i <= 0) {
+            return $res;
+        }
+        $prev = $this->tokens[$this->id - $i];
+        if ($prev[0] == T_STRING) {
+            return $this->resolveFullTypeForTypedProperty($i + 1, $prev[1] . $res);
+        };
+        if ($prev[0] == T_NS_SEPARATOR) {
+            return $this->resolveFullTypeForTypedProperty($i + 1, '\\' . $res);
+        }
+
+        return $res;
     }
 }

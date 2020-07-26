@@ -4,10 +4,8 @@ namespace PhpUML\Parser\Tokens;
 
 abstract class AbstractToken
 {
-    /** @var int  */
-    protected $id;
-    /** @var array  */
-    protected $tokens;
+    protected int $id;
+    protected array $tokens;
 
     public function __construct(int $id, array $tokens)
     {

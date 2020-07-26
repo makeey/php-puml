@@ -8,10 +8,8 @@ use PhpUML\UML\Entity\UMLNamespace;
 
 class NamespaceFormatter
 {
-    /** @var InterfaceFormatter */
-    private $interfaceFormatter;
-    /** @var ClassFormatter **/
-    private $classFormatter;
+    private InterfaceFormatter $interfaceFormatter;
+    private ClassFormatter $classFormatter;
 
     public function __construct(InterfaceFormatter $intrfaceFormatter, ClassFormatter $classFormatter)
     {

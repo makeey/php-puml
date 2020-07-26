@@ -8,8 +8,7 @@ use Symfony\Component\Console\Command\Command;
 
 class Application implements IApplication
 {
-    /** @var \Symfony\Component\Console\Application */
-    private $application;
+    private \Symfony\Component\Console\Application $application;
 
     public function __construct(Command ...$commands)
     {

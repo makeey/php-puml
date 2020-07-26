@@ -4,12 +4,9 @@ namespace PhpUML\Parser\Entity;
 
 final class PhpClassMember
 {
-    /** @var string|null */
-    private $type;
-    /** @var string */
-    private $name;
-    /** @var string */
-    private $accessModifier;
+    private ?string $type;
+    private string $name;
+    private string $accessModifier;
 
     public function __construct(string $name, string $accessModifier, ?string $type)
     {

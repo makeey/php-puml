@@ -5,10 +5,8 @@ namespace PhpUML\Parser\Entity;
 final class PhpMethodParameter
 {
     private const DEFAULT_TYPE = 'mixed';
-    /** @var string */
-    private $name;
-    /** @var string */
-    private $type;
+    private string $name;
+    private string $type;
 
     public function __construct(string $name, ?string $type)
     {
@@ -20,6 +18,7 @@ final class PhpMethodParameter
     {
         return $this->name;
     }
+
     public function type(): string
     {
         return $this->type;

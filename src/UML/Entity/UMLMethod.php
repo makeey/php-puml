@@ -4,12 +4,10 @@ namespace PhpUML\UML\Entity;
 
 class UMLMethod
 {
-    /** @var string  */
-    private $methodName;
-    /** @var string */
-    private $accessModifier;
+    private string $methodName;
+    private string $accessModifier;
     /** @var UMLMethodParameter[] */
-    private $params;
+    private array $params;
 
     public function __construct(string $methodName, string $accessModifier, UMLMethodParameter ...$params)
     {
