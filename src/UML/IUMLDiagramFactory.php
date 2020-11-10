@@ -1,4 +1,5 @@
-<?php // @codeCoverageIgnoreStart
+<?php declare(strict_types=1);
+// @codeCoverageIgnoreStart
 
 namespace PhpUML\UML;
 
